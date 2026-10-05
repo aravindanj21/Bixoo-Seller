@@ -1,0 +1,228 @@
+.product-card {
+    width: 350px;
+    height: 400px;
+
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    box-sizing: border-box;
+
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+.product-image-container {
+    width: 318px;
+    height: 190px;
+
+    position: relative;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+}
+
+
+.product-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+
+
+.product-status {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 5px 8px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    border-radius: 12px;
+
+    font-size: 9px;
+
+    color: #333333;
+}
+
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    background: #84b93f;
+
+    border-radius: 50%;
+}
+
+
+.hidden-dot {
+    background: #777777;
+}
+
+
+
+
+.product-info {
+    width: 100%;
+}
+
+
+.product-category {
+    margin: 0 0 6px 0;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    color: #84a936;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+
+.product-name {
+    margin: 0 0 10px 0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222222;
+
+    line-height: 20px;
+}
+
+
+.product-price {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222222;
+}
+
+
+.product-price span {
+    font-size: 10px;
+    font-weight: 400;
+
+    color: #777777;
+}
+
+
+
+.product-availability {
+    width: 100%;
+
+    margin-top: auto;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #eeeeee;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 10px;
+
+    color: #333333;
+}
+
+
+
+.availability-switch {
+    position: relative;
+
+    width: 40px;
+    height: 22px;
+
+    display: inline-block;
+}
+
+
+.availability-switch input {
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+}
+
+
+.availability-slider {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: #dfe4e8;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.availability-slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    left: 3px;
+    top: 3px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    transition: 0.3s;
+}
+
+
+.availability-switch input:checked + .availability-slider {
+    background: #8fbd3f;
+}
+
+
+.availability-switch input:checked + .availability-slider::before {
+    transform: translateX(18px);
+}
+
+
+
+.product-card.hidden-product {
+    height: 378px;
+
+    opacity: 0.8;
+}

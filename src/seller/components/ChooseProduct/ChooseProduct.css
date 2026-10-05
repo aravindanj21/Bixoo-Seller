@@ -1,0 +1,308 @@
+* {
+    box-sizing: border-box;
+}
+
+.choose-product-page {
+    width: 390px;
+    min-height: 1493px;
+    max-width: 768px;
+
+    margin: 0 auto;
+
+    background: #f8fbea;
+
+    font-family: "Poppins", sans-serif;
+
+    overflow: hidden;
+}
+
+
+
+
+.choose-product-header {
+    width: 350px;
+
+    margin: 0 auto;
+}
+
+.step-text {
+    padding-top: 16px;
+
+    font-size: 10px;
+    font-weight: 400;
+
+    color: #4b5563;
+}
+
+
+
+.choose-product-header h1 {
+    width: 350px;
+    height: 36px;
+
+    margin: 0;
+
+    padding-top: 4px;
+    padding-bottom: 8px;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    line-height: 28px;
+
+    color: #1f2937;
+}
+
+
+
+
+.choose-progress {
+    width: 350px;
+    height: 8px;
+
+    margin-top: 8px;
+
+    background: #dce2f7;
+
+    border-radius: 9999px;
+
+    overflow: hidden;
+}
+
+.choose-progress-fill {
+    width: 50%;
+    height: 8px;
+
+    background: #8db847;
+
+    border-radius: 9999px;
+}
+
+
+
+
+.choose-description-container {
+    width: 350px;
+    height: 56px;
+
+    padding-top: 16px;
+}
+
+.choose-description-container p {
+    width: 350px;
+
+    margin: 0;
+
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 400;
+    font-size: 14px;
+
+    line-height: 20px;
+
+    color: #4b5563;
+}
+
+
+
+
+.product-search-container {
+    width: 350px;
+    height: 79px;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.product-search {
+    position: relative;
+
+    width: 350px;
+    height: 47px;
+}
+
+.product-search input {
+    width: 350px;
+    height: 47px;
+
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 11px;
+    padding-left: 48px;
+
+    background: #ffffff;
+
+    border: 1px solid #bcc9c7;
+
+    border-radius: 22px;
+
+    box-shadow: 0px 4px 14px 0px #0000000f;
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 12px;
+
+    color: #374151;
+}
+
+.product-search input::placeholder {
+    color: #9ca3af;
+}
+
+
+
+
+.product-search-icon {
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    object-fit: contain;
+
+    z-index: 2;
+}
+
+
+
+
+.agriculture-banner {
+    width: 390px;
+    height: 180px;
+
+    margin-top: 16px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+.product-feed {
+    position: relative;
+
+    width: 390px;
+    min-height: 966px;
+
+    margin-top: -24px;
+
+    padding-top: 32px;
+    padding-right: 20px;
+    padding-bottom: 48px;
+    padding-left: 20px;
+
+    background: #f8fbea;
+
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+
+    z-index: 2;
+}
+
+
+
+
+.product-grid {
+    width: 350px;
+
+    display: grid;
+
+    grid-template-columns: 167px 167px;
+
+    column-gap: 16px;
+    row-gap: 16px;
+}
+
+
+
+.product-story-card {
+    width: 167px;
+    height: 256px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 24px;
+
+    background: transparent;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-shadow:
+        0px 2px 4px -2px #0000001a,
+        0px 4px 6px -1px #0000001a;
+}
+
+.product-story-card img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 24px;
+}
+
+
+
+
+.add-custom-product {
+    width: 350px;
+    height: 54px;
+
+    margin-top: 32px;
+
+    padding: 16px 24px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    background: transparent;
+
+    border: 1px dashed #8db847;
+
+    border-radius: 24px;
+
+    color: #8db847;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    line-height: 18px;
+
+    cursor: pointer;
+}
+
+.custom-plus {
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid #8db847;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+    line-height: 1;
+}

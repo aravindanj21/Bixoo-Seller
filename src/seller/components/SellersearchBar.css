@@ -1,0 +1,248 @@
+.seller-search-container {
+    width: 100%;
+    max-width: 390px;
+    height: 72px;
+
+    padding: 8px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    box-sizing: border-box;
+}
+
+
+
+
+.seller-search-box {
+    flex: 1;
+    min-width: 0;
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 14px;
+
+    background: #ffffff;
+
+    border-radius: 28px;
+
+    box-sizing: border-box;
+}
+
+
+
+.search-icon {
+    width: 21px;
+    height: 21px;
+
+    flex-shrink: 0;
+
+    color: #667085;
+
+    margin-right: 10px;
+}
+
+
+
+
+.seller-search-box input {
+    flex: 1;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #667085;
+
+    padding: 0;
+}
+
+
+.seller-search-box input::placeholder {
+    color: #667085;
+    opacity: 1;
+}
+
+
+
+
+.filter-icon {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+
+    color: #667085;
+
+    margin-left: 5px;
+
+    cursor: pointer;
+}
+
+
+
+
+.seller-round-button {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+
+.seller-round-button svg {
+    width: 20px;
+    height: 20px;
+
+    color: #101828;
+}
+
+
+
+
+.red-dot,
+.green-dot {
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    top: 9px;
+    right: 8px;
+
+    border: 2px solid #ffffff;
+
+    box-sizing: content-box;
+}
+
+
+.red-dot {
+    background: #e51c23;
+}
+
+
+.green-dot {
+    background: #78a900;
+}
+
+
+
+
+@media (max-width: 375px) {
+
+    .seller-search-container {
+        padding-left: 12px;
+        padding-right: 12px;
+
+        gap: 6px;
+    }
+
+    .seller-search-box {
+        height: 52px;
+
+        padding-left: 12px;
+        padding-right: 10px;
+    }
+
+    .seller-round-button {
+        width: 44px;
+        height: 44px;
+
+        flex-basis: 44px;
+    }
+
+    .seller-search-box input {
+        font-size: 13px;
+    }
+
+    .search-icon {
+        width: 19px;
+        height: 19px;
+
+        margin-right: 7px;
+    }
+
+    .filter-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .seller-round-button svg {
+        width: 19px;
+        height: 19px;
+    }
+}
+
+
+
+@media (max-width: 340px) {
+
+    .seller-search-container {
+        padding-left: 8px;
+        padding-right: 8px;
+
+        gap: 5px;
+    }
+
+    .seller-search-box {
+        height: 48px;
+
+        padding-left: 10px;
+        padding-right: 8px;
+    }
+
+    .seller-round-button {
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+    }
+
+    .seller-search-box input {
+        font-size: 12px;
+    }
+
+    .search-icon {
+        width: 17px;
+        height: 17px;
+
+        margin-right: 5px;
+    }
+
+    .filter-icon {
+        width: 17px;
+        height: 17px;
+
+        margin-left: 3px;
+    }
+
+    .seller-round-button svg {
+        width: 18px;
+        height: 18px;
+    }
+}

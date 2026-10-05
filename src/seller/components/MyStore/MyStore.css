@@ -1,0 +1,16 @@
+.my-store {
+    width: 390px;
+    min-height: 2000px;
+
+    margin: 0 auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    background: #f8fbed;
+
+    box-sizing: border-box;
+}

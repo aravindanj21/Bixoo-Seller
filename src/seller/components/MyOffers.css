@@ -1,0 +1,168 @@
+.offers-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+}
+
+
+
+.offer-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    padding: 9px;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+}
+
+
+
+.offer-card img {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+}
+
+
+
+
+.offer-details {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.offer-details strong {
+    font-size: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.offer-details span {
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    color: #777;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+.negotiation,
+.accepted {
+    flex-shrink: 0;
+
+    font-size: 7px;
+
+    padding: 3px 7px;
+
+    border-radius: 10px;
+
+    white-space: nowrap;
+}
+
+
+.negotiation {
+    color: #e49b19;
+    background: #fff1cf;
+}
+
+
+.accepted {
+    color: #1a9c69;
+    background: #dff8ec;
+}
+
+
+
+
+@media (max-width: 375px) {
+
+    .offer-card {
+        padding: 8px;
+
+        gap: 8px;
+    }
+
+    .offer-card img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .offer-details strong {
+        font-size: 9px;
+    }
+
+    .offer-details span {
+        font-size: 7px;
+    }
+
+    .negotiation,
+    .accepted {
+        font-size: 6px;
+
+        padding: 3px 6px;
+    }
+}
+
+
+
+
+@media (max-width: 340px) {
+
+    .offer-card {
+        padding: 7px;
+
+        gap: 6px;
+    }
+
+    .offer-card img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .offer-details strong {
+        font-size: 8px;
+    }
+
+    .offer-details span {
+        font-size: 7px;
+    }
+
+    .negotiation,
+    .accepted {
+        font-size: 6px;
+
+        padding: 2px 5px;
+    }
+}

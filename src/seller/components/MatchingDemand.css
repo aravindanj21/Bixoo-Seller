@@ -1,0 +1,222 @@
+.dashboard-section {
+    width: 100%;
+    max-width: 390px;
+
+    padding: 5px 20px 15px;
+
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+
+
+.section-heading {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    box-sizing: border-box;
+}
+
+
+.section-heading h3 {
+    margin: 0;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.section-heading button {
+    border: none;
+
+    background: transparent;
+
+    color: #777;
+
+    font-size: 9px;
+
+    padding: 0;
+    margin: 0;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+
+
+.demand-list {
+    width: 100%;
+
+    display: flex;
+
+    gap: 40px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    box-sizing: border-box;
+
+   
+    scrollbar-width: none;
+}
+
+
+.demand-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+.demand-card {
+    flex: 0 0 123px;
+
+    width: 123px;
+
+    background: #ffffff;
+
+    padding: 10px;
+
+    border-radius: 16px;
+
+    box-sizing: border-box;
+}
+
+
+
+
+.demand-card img {
+    width: 100%;
+    height: 80px;
+
+    display: block;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+}
+
+
+
+
+.demand-info {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 7px;
+}
+
+
+.demand-info strong {
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+.demand-info span {
+    font-size: 7px;
+
+    color: #777;
+
+    flex-shrink: 0;
+}
+
+
+
+
+.new-match,
+.urgent {
+    display: inline-block;
+
+    margin: 5px 0 0;
+
+    padding: 3px 7px;
+
+    border-radius: 10px;
+
+    font-size: 7px;
+}
+
+
+.new-match {
+    background: #fff1d6;
+    color: #e59a18;
+}
+
+
+.urgent {
+    background: #fff1d6;
+    color: #e59a18;
+}
+
+
+
+
+@media (max-width: 375px) {
+
+    .dashboard-section {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .demand-list {
+        gap: 20px;
+    }
+
+    .demand-card {
+        flex-basis: 120px;
+        width: 120px;
+    }
+
+    .demand-card img {
+        height: 76px;
+    }
+}
+
+
+
+
+@media (max-width: 340px) {
+
+    .dashboard-section {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .demand-list {
+        gap: 12px;
+    }
+
+    .demand-card {
+        flex-basis: 115px;
+        width: 115px;
+    }
+
+    .demand-card img {
+        height: 72px;
+    }
+
+    .section-heading h3 {
+        font-size: 12px;
+    }
+
+    .demand-info strong {
+        font-size: 9px;
+    }
+}
