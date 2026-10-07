@@ -4,18 +4,16 @@
 
 .choose-product-page {
     width: 390px;
-    min-height: 1493px;
+    min-height: 100vh;
     max-width: 768px;
 
     margin: 0 auto;
 
     background: #f8fbea;
-
     font-family: "Poppins", sans-serif;
 
-    overflow: hidden;
+    overflow-x: hidden;
 }
-
 
 
 
@@ -56,26 +54,52 @@
 
 
 
-.choose-progress {
+.choose-progress-section {
     width: 350px;
-    height: 8px;
 
-    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
 
-    background: #dce2f7;
-
-    border-radius: 9999px;
-
-    overflow: hidden;
+    gap: 12px;
 }
 
-.choose-progress-fill {
-    width: 50%;
-    height: 8px;
+.choose-progress-text {
+    width: 100%;
 
-    background: #8db847;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 16px;
+
+    color: #65702d;
+}
+
+.choose-progress-bars {
+    width: 350px;
+    height: 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.choose-progress-bar {
+    flex: 1;
+    height: 10px;
+
+    background: #d3daef;
 
     border-radius: 9999px;
+}
+
+.choose-progress-bar.active {
+    background: #4f7905;
 }
 
 
@@ -174,6 +198,8 @@
 
 
 .agriculture-banner {
+    position: relative;
+
     width: 390px;
     height: 180px;
 
@@ -182,7 +208,42 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    overflow: hidden;
 }
+
+
+
+.banner-overlay {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.25);
+}
+
+
+
+.banner-category-name {
+    margin: 0;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+
+    color: #ffffff;
+
+    text-align: center;
+}
+
 
 
 
@@ -191,13 +252,12 @@
     position: relative;
 
     width: 390px;
-    min-height: 966px;
 
     margin-top: -24px;
 
     padding-top: 32px;
     padding-right: 20px;
-    padding-bottom: 48px;
+    padding-bottom: 20px;
     padding-left: 20px;
 
     background: #f8fbea;
@@ -215,46 +275,78 @@
     width: 350px;
 
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
 
-    grid-template-columns: 167px 167px;
+    gap: 16px;
 
-    column-gap: 16px;
-    row-gap: 16px;
+    margin: 0 auto;
 }
 
 
 
 .product-story-card {
     width: 167px;
-    height: 256px;
+    height: 180px;
 
     padding: 0;
 
     border: none;
-    border-radius: 24px;
+    border-radius: 20px;
 
-    background: transparent;
+    background: #ffffff;
 
     overflow: hidden;
 
+    display: flex;
+    flex-direction: column;
+
     cursor: pointer;
 
-    box-shadow:
-        0px 2px 4px -2px #0000001a,
-        0px 4px 6px -1px #0000001a;
+    box-sizing: border-box;
 }
 
-.product-story-card img {
+.product-story-card > img {
     width: 100%;
-    height: 100%;
+    height: 135px;
+
+    min-width: 100%;
+    max-width: 100%;
+
+    min-height: 135px;
+    max-height: 135px;
 
     display: block;
 
     object-fit: cover;
 
-    border-radius: 24px;
+    object-position: center;
+
+    flex-shrink: 0;
 }
 
+.product-card-name {
+    width: 100%;
+    height: 45px;
+
+    padding: 8px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #141b2b;
+
+    line-height: 16px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
 
 
 

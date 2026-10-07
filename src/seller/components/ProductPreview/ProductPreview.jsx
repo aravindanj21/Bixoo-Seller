@@ -1,173 +1,396 @@
-import { useNavigate } from "react-router-dom";
+import {
+    useLocation,
+    useNavigate
+} from "react-router-dom";
+
+import { useState } from "react";
+
 import "./ProductPreview.css";
 
+import {
+    FiPackage,
+    FiTruck,
+    FiMapPin,
+    FiDroplet,
+    FiShoppingBag,
+    FiPlay,
+} from "react-icons/fi";
+
+import { MdOutlineVerified } from "react-icons/md";
 
 import wheatbag from "../../../assets/wheatbag.jpg";
-import wheatimage from "../../../assets/wheatimage.jpg";
+
 
 function ProductPreview() {
-    const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate(-1);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
+    
+
+    const productData = location.state || {};
+
+
+    
+    const category =
+        productData.category || "Grains & Cereals";
+
+    const productName =
+        productData.productName ||
+        "Premium Organic Sharbati Wheat";
+
+    const description =
+        productData.description ||
+        "Grade A, Export Quality";
+
+    const quantity =
+        productData.quantity || 50;
+
+    const minPrice =
+        productData.pricing?.minPrice || "2400";
+
+    const maxPrice =
+        productData.pricing?.maxPrice || "2600";
+
+    const negotiable =
+        productData.pricing?.negotiable || false;
+
+    const freeDelivery =
+        productData.delivery?.freeDelivery || false;
+
+    const condition =
+        productData.condition || "new";
+
+    const uploadedPhotos =
+        productData.photos || [];
+
+    const productVideo =
+        productData.video || null;
+
+    const customProductImage =
+        productData.selectedImage || null;
+
+
+    
+
+    const photoList = [];
+
+    if (customProductImage) {
+        photoList.push(customProductImage);
+    }
+
+    uploadedPhotos.forEach((photo) => {
+        if (photo?.preview) {
+            photoList.push(photo.preview);
+        }
+    });
+
+
+    
+    if (photoList.length === 0) {
+        photoList.push(wheatbag);
+    }
+
+
+    
+
+    const [selectedImage, setSelectedImage] =
+    useState(photoList[0]);
+
+
+    
+
+    const handleClose = () => {
+        navigate("/seller/my-store");
     };
+
+
+    
 
     const handleAddToStore = () => {
-        console.log("Product added to store");
+
+        const finalProduct = {
+            category,
+            productName,
+            description,
+            quantity,
+
+            pricing: {
+                minPrice,
+                maxPrice,
+                negotiable,
+            },
+
+            delivery: {
+                freeDelivery,
+            },
+
+            condition,
+
+            photos: photoList,
+
+            video: productVideo,
+
+            status: "Live",
+        };
+
+
+        console.log(
+            "Product added to store:",
+            finalProduct
+        );
+
 
         
-        navigate("/my-store");
+
+
+        navigate("/seller/my-store", {
+            state: {
+                newProduct: finalProduct,
+            },
+        });
     };
 
+
     return (
+
         <div className="product-preview-page">
-
-            
-            <header className="preview-top-nav">
-
-                <button
-                    className="preview-nav-btn"
-                    onClick={handleBack}
-                    aria-label="Go back"
-                >
-                    ←
-                </button>
-
-                <div className="preview-logo">
-                    bixoo
-                </div>
-
-                <button
-                    className="preview-more-btn"
-                    aria-label="More options"
-                >
-                    ⋮
-                </button>
-
-            </header>
 
 
            
-            <main className="preview-main">
 
-               
-                <section className="preview-progress">
-
-                    <div className="preview-progress-text">
-                        <span>Step 4 of 4</span>
-                        <span className="preview-step-name">
-                            Preview
-                        </span>
-                    </div>
-
-                    <div className="preview-progress-track">
-                        <div className="preview-progress-fill"></div>
-                    </div>
-
-                </section>
+            <div className="preview-header">
 
 
                 
+                <button
+                    type="button"
+                    className="close-button"
+                    onClick={handleClose}
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+
+              
+                <div className="category-progress-section">
+
+
+                    <div className="category-progress-text">
+
+                        <span>
+                            Step 5 of 5
+                        </span>
+
+                        <span>
+                            Preview
+                        </span>
+
+                    </div>
+
+
+                    <div className="category-progress-bars">
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+           
+
+            <main className="preview-main">
+
+
+               
                 <section className="preview-introduction">
 
-                    <h1>Preview & Confirm</h1>
+                    <h1>
+                        Preview & Confirm
+                    </h1>
 
                     <p>
-                        Review your product details before publishing it to
-                        your store.
+                        Review your product details before
+                        publishing it to your store.
                     </p>
 
                 </section>
 
 
-               
+                
+
                 <section className="preview-product-stack">
 
+
                     
+
                     <div className="preview-title-section">
 
                         <div className="preview-category">
-                            Grains & Cereals
+                            {category}
                         </div>
 
                         <h2>
-                            Premium Organic Sharbati Wheat
+                            {productName}
                         </h2>
 
                         <p>
-                            Grade A, Export Quality
+                            {description}
                         </p>
 
                     </div>
 
 
                     
+
                     <div className="preview-image-wrapper">
 
                         <img
-                            src={wheatbag}
-                            alt="Premium Organic Sharbati Wheat"
+                            src={selectedImage}
+                            alt={productName}
                             className="preview-main-image"
                         />
 
+
                         <div className="preview-ready-badge">
-                            <span className="ready-icon">✓</span>
+
+                            <span className="ready-icon">
+                                ✓
+                            </span>
+
                             Ready
+
                         </div>
 
                     </div>
 
 
                     
+
                     <div className="preview-thumbnails">
 
-                        <button className="preview-thumbnail active">
-                            <img
-                                src={wheatbag}
-                                alt="Wheat view 1"
-                            />
-                        </button>
 
-                        <button className="preview-thumbnail">
-                            <img
-                                src={wheatbag}
-                                alt="Wheat view 2"
-                            />
-                        </button>
+                        {photoList.map(
+                            (photo, index) => (
 
-                        <button className="preview-video-thumbnail">
+                                <button
+                                    type="button"
+                                    key={index}
+                                    className={`preview-thumbnail ${
+                                        selectedImage === photo
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        setSelectedImage(
+                                            photo
+                                        )
+                                    }
+                                >
 
-                            <span className="video-play">
-                                ▶
-                            </span>
+                                    <img
+                                        src={photo}
+                                        alt={`${productName} ${index + 1}`}
+                                    />
 
-                            <span>Video</span>
+                                </button>
 
-                        </button>
+                            )
+                        )}
+
+
+                       
+                        {productVideo && (
+
+                            <button
+                                type="button"
+                                className="preview-video-thumbnail"
+                                onClick={() => {
+                                    console.log(
+                                        "Selected video:",
+                                        productVideo
+                                    );
+                                }}
+                            >
+
+                                <FiPlay
+                                    className="video-play"
+                                />
+
+                                <span>
+                                    Video
+                                </span>
+
+                            </button>
+
+                        )}
 
                     </div>
 
 
                     
+
                     <div className="preview-card price-card">
+
 
                         <span className="preview-card-label">
                             Base Price
                         </span>
 
+
                         <div className="preview-price">
-                            ₹ 2,400 - ₹ 2,600
-                            <small>/qtl</small>
+
+                            ₹ {minPrice}
+
+                            {maxPrice && (
+                                <>
+                                    {" - "}
+                                    ₹ {maxPrice}
+                                </>
+                            )}
+
+                            <small>
+                                /Ton
+                            </small>
+
                         </div>
+
+
+                        
+
+                        {negotiable && (
+
+                            <span className="preview-negotiable">
+                                Negotiable
+                            </span>
+
+                        )}
+
 
                         <div className="preview-card-divider"></div>
 
+
                         <div className="preview-stock-row">
 
-                            <span>Stock Quantity</span>
+                            <span>
+                                Stock Quantity
+                            </span>
 
                             <strong>
-                                5,000 quintals
+                                {quantity} Tons
                             </strong>
 
                         </div>
@@ -176,52 +399,73 @@ function ProductPreview() {
 
 
                     
+
                     <div className="preview-card details-card">
 
+
                         
                         <div className="detail-block">
 
                             <span className="detail-label">
-                                ▣ Minimum Order
+
+                                <FiPackage
+                                    className="detail-icon"
+                                />
+
+                                Available Quantity
+
                             </span>
 
                             <strong>
-                                50 Quintals
+                                {quantity} Tons
                             </strong>
 
                         </div>
 
 
                         
+
                         <div className="detail-block">
 
                             <span className="detail-label">
-                                ▱ Delivery Options
+
+                                <FiTruck
+                                    className="detail-icon"
+                                />
+
+                                Delivery Options
+
                             </span>
 
                             <strong>
-                                Pickup, Transport, Free
+
+                                {freeDelivery
+                                    ? "Free Delivery"
+                                    : "Standard Delivery"}
+
                             </strong>
 
                         </div>
 
 
-                       
+
                         <div className="detail-block">
 
                             <span className="detail-label">
-                                ◉ Origin
+
+                                <FiMapPin
+                                    className="detail-icon"
+                                />
+
+                                Category
+
                             </span>
 
                             <div className="origin-row">
 
                                 <strong>
-                                    Madhya Pradesh
+                                    {category}
                                 </strong>
-
-                                <span className="map-icon">
-                                    ♧
-                                </span>
 
                             </div>
 
@@ -232,16 +476,26 @@ function ProductPreview() {
 
 
                         
+
                         <div className="preview-bottom-details">
+
 
                             <div className="bottom-detail">
 
                                 <span className="bottom-detail-label">
-                                    △ Moisture Content
+
+                                    <FiDroplet
+                                        className="detail-icon"
+                                    />
+
+                                    Price Type
+
                                 </span>
 
                                 <strong>
-                                    &lt; 12%
+                                    {negotiable
+                                        ? "Negotiable"
+                                        : "Fixed"}
                                 </strong>
 
                             </div>
@@ -250,11 +504,21 @@ function ProductPreview() {
                             <div className="bottom-detail">
 
                                 <span className="bottom-detail-label">
-                                    ♢ Condition
+
+                                    <MdOutlineVerified
+                                        className="detail-icon"
+                                    />
+
+                                    Condition
+
                                 </span>
 
                                 <strong>
-                                    Brand New
+
+                                    {condition === "new"
+                                        ? "Brand New"
+                                        : "Refurbished"}
+
                                 </strong>
 
                             </div>
@@ -268,15 +532,21 @@ function ProductPreview() {
             </main>
 
 
-          
+           
             <div className="preview-bottom-action">
 
                 <button
+                    type="button"
                     className="add-store-button"
                     onClick={handleAddToStore}
                 >
-                    <span>▣</span>
+
+                    <FiShoppingBag
+                        className="add-store-icon"
+                    />
+
                     Add to My Store
+
                 </button>
 
             </div>
@@ -284,5 +554,6 @@ function ProductPreview() {
         </div>
     );
 }
+
 
 export default ProductPreview;

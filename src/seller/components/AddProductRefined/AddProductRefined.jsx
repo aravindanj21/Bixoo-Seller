@@ -1,19 +1,20 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./AddProductRefined.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FiVideo } from "react-icons/fi";
 
+import "./AddProductRefined.css";
 
 import truck from "../../../assets/truck.png";
 import cameraicon from "../../../assets/cameraicon.png";
 import wheatimage from "../../../assets/wheatimage.jpg";
 import mountain from "../../../assets/mountain.png";
-import video from "../../../assets/video.png"
-
-
 
 function AddProductRefined() {
-
     const navigate = useNavigate();
+    const location = useLocation();
+
+    
+    const previousProductData = location.state || {};
 
     
 
@@ -36,6 +37,7 @@ function AddProductRefined() {
 
 
     
+
     const [freeDelivery, setFreeDelivery] = useState(false);
 
 
@@ -51,18 +53,35 @@ function AddProductRefined() {
     const photoInputRef = useRef(null);
 
     const handlePhotoUpload = (event) => {
+        const files = Array.from(event.target.files || []);
 
-        const files = Array.from(event.target.files);
+        if (files.length === 0) {
+            return;
+        }
+
+        const imageFiles = files.filter((file) =>
+            file.type.startsWith("image/")
+        );
+
+        if (imageFiles.length === 0) {
+            alert("Please select valid image files.");
+            return;
+        }
 
         const availableSlots = 5 - photos.length;
 
-        const selectedFiles = files.slice(
+        if (availableSlots <= 0) {
+            alert("You can upload a maximum of 5 photos.");
+            return;
+        }
+
+        const selectedFiles = imageFiles.slice(
             0,
             availableSlots
         );
 
         const newPhotos = selectedFiles.map((file) => ({
-            file: file,
+            file,
             preview: URL.createObjectURL(file),
         }));
 
@@ -70,13 +89,16 @@ function AddProductRefined() {
             ...prev,
             ...newPhotos,
         ]);
+
+        
+        event.target.value = "";
     };
 
 
+    
+
     const removePhoto = (index) => {
-
         setPhotos((prev) => {
-
             const photoToRemove = prev[index];
 
             if (photoToRemove?.preview) {
@@ -94,18 +116,35 @@ function AddProductRefined() {
 
 
     
-
-    const [video, setVideo] = useState(null);
+    const [productVideo, setProductVideo] =
+        useState(null);
 
     const videoInputRef = useRef(null);
 
+
+    
     const handleVideoUpload = (event) => {
+        const file = event.target.files?.[0];
 
-        const file = event.target.files[0];
-
-        if (file) {
-            setVideo(file);
+        if (!file) {
+            return;
         }
+
+        if (!file.type.startsWith("video/")) {
+            alert("Please select a valid video file.");
+            return;
+        }
+
+        setProductVideo(file);
+
+        event.target.value = "";
+    };
+
+
+    
+
+    const removeVideo = () => {
+        setProductVideo(null);
     };
 
 
@@ -116,124 +155,141 @@ function AddProductRefined() {
 
 
     
-    const handleCancel = () => {
-        navigate("/my-store");
+    const handleClose = () => {
+        navigate("/seller/my-store");
     };
 
 
-
+   
 
     const handleContinue = () => {
 
+        
+        if (quantity <= 0) {
+            alert(
+                "Please enter a quantity greater than 0."
+            );
+            return;
+        }
+
+        
+        if (!minPrice) {
+            alert("Please enter minimum price.");
+            return;
+        }
+
+       
+        if (!maxPrice) {
+            alert("Please enter maximum price.");
+            return;
+        }
+
+        
+        if (Number(minPrice) > Number(maxPrice)) {
+            alert(
+                "Minimum price cannot be greater than maximum price."
+            );
+            return;
+        }
+
         const productDetails = {
 
-            quantity: quantity,
+            
+            ...previousProductData,
+
+            quantity,
 
             pricing: {
-                minPrice: minPrice,
-                maxPrice: maxPrice,
-                negotiable: negotiable,
+                minPrice,
+                maxPrice,
+                negotiable,
             },
 
             delivery: {
-                freeDelivery: freeDelivery,
+                freeDelivery,
             },
 
-            condition: condition,
+            condition,
 
-            photos: photos,
+            photos,
 
-            video: video,
+            video: productVideo,
 
-            description: description,
+            description: description.trim(),
         };
 
-
         console.log(
-            "Product Details:",
+            "Final Product Details:",
             productDetails
         );
 
-
-        
-
-        navigate("/product-preview");
+        navigate(
+            "/product-preview",
+            {
+                state: productDetails,
+            }
+        );
     };
 
 
     return (
-
         <div className="refined-product-page">
 
-
             
-
-            <div className="refined-top-nav">
-
+            <div className="refined-header">
 
                 <button
                     type="button"
-                    className="refined-back-btn"
-                    onClick={() => navigate(-1)}
+                    className="close-button"
+                    onClick={handleClose}
+                    aria-label="Close"
                 >
-                    ←
+                    ×
                 </button>
 
 
-                <h1 className="refined-page-title">
-                    Add Details
-                </h1>
+               
+                <div className="category-progress-section">
+
+                    <div className="category-progress-text">
+
+                        <span>
+                            Step 4 of 5
+                        </span>
+
+                        <span>
+                            Add Details
+                        </span>
+
+                    </div>
 
 
-                <button
-                    type="button"
-                    className="refined-cancel-btn"
-                    onClick={handleCancel}
-                >
-                    Cancel
-                </button>
+                    <div className="category-progress-bars">
 
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar active"></span>
+
+                        <span className="category-progress-bar"></span>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
-
             
-
-            <div className="refined-progress-container">
-
-
-                <div
-                    className="refined-progress-step completed"
-                ></div>
-
-
-                <div
-                    className="refined-progress-step completed"
-                ></div>
-
-
-                <div
-                    className="refined-progress-step active"
-                ></div>
-
-
-                <div
-                    className="refined-progress-step"
-                ></div>
-
-
-            </div>
-
-
-
-
             <main className="refined-main-content">
 
 
+                
 
                 <section className="quantity-section">
-
 
                     <h2 className="quantity-heading">
                         Quantity Available
@@ -241,7 +297,6 @@ function AddProductRefined() {
 
 
                     <div className="quantity-control">
-
 
                         <button
                             type="button"
@@ -253,22 +308,17 @@ function AddProductRefined() {
                         </button>
 
 
-
                         <div className="quantity-value">
-
 
                             <span className="quantity-number">
                                 {quantity}
                             </span>
 
-
                             <span className="quantity-unit">
                                 Tons
                             </span>
 
-
                         </div>
-
 
 
                         <button
@@ -279,23 +329,22 @@ function AddProductRefined() {
                             +
                         </button>
 
-
                     </div>
 
 
                     <div className="quantity-info">
-                        Unit adjusted based on category (Wheat)
+                        Unit adjusted based on category
+                        {previousProductData.category
+                            ? ` (${previousProductData.category})`
+                            : ""}
                     </div>
 
-
                 </section>
-
 
 
                 
 
                 <section className="pricing-section">
-
 
                     <h2 className="refined-section-heading">
                         Pricing
@@ -304,17 +353,15 @@ function AddProductRefined() {
 
                     <div className="pricing-container">
 
-
                         <div className="price-input-box">
-
 
                             <span className="price-currency">
                                 ₹
                             </span>
 
-
                             <input
                                 type="number"
+                                min="0"
                                 placeholder="Min"
                                 value={minPrice}
                                 onChange={(event) =>
@@ -324,7 +371,6 @@ function AddProductRefined() {
                                 }
                             />
 
-
                         </div>
 
 
@@ -333,11 +379,13 @@ function AddProductRefined() {
                         </span>
 
 
-                        <div className="price-input-box">
+                        
 
+                        <div className="price-input-box">
 
                             <input
                                 type="number"
+                                min="0"
                                 placeholder="Max"
                                 value={maxPrice}
                                 onChange={(event) =>
@@ -347,21 +395,18 @@ function AddProductRefined() {
                                 }
                             />
 
-
                             <span className="price-unit">
                                 / Ton
                             </span>
 
-
                         </div>
-
 
                     </div>
 
 
+                  
 
                     <label className="negotiable-option">
-
 
                         <input
                             type="checkbox"
@@ -373,22 +418,18 @@ function AddProductRefined() {
                             }
                         />
 
-
                         <span>
                             Price is negotiable
                         </span>
 
-
                     </label>
-
 
                 </section>
 
 
+              
 
-               
                 <section className="delivery-section">
-
 
                     <h2 className="refined-section-heading">
                         Delivery Options
@@ -397,57 +438,45 @@ function AddProductRefined() {
 
                     <div className="delivery-option-box">
 
-
                         <div className="delivery-option-left">
-
 
                             <img
                                 src={truck}
                                 alt="Delivery"
                             />
 
-
                             <span>
                                 Free Delivery
                             </span>
 
-
                         </div>
-
 
 
                         <button
                             type="button"
-                            className={
-                                `delivery-toggle ${
-                                    freeDelivery
-                                        ? "active"
-                                        : ""
-                                }`
-                            }
+                            className={`delivery-toggle ${
+                                freeDelivery
+                                    ? "active"
+                                    : ""
+                            }`}
                             onClick={() =>
                                 setFreeDelivery(
                                     (prev) => !prev
                                 )
                             }
+                            aria-pressed={freeDelivery}
                         >
-
                             <span></span>
-
                         </button>
-
 
                     </div>
 
-
                 </section>
-
 
 
                 
 
                 <section className="condition-section">
-
 
                     <h2 className="refined-section-heading">
                         Product Condition
@@ -456,16 +485,13 @@ function AddProductRefined() {
 
                     <div className="condition-container">
 
-
                         <button
                             type="button"
-                            className={
-                                `condition-button ${
-                                    condition === "new"
-                                        ? "active"
-                                        : ""
-                                }`
-                            }
+                            className={`condition-button ${
+                                condition === "new"
+                                    ? "active"
+                                    : ""
+                            }`}
                             onClick={() =>
                                 setCondition("new")
                             }
@@ -474,17 +500,14 @@ function AddProductRefined() {
                         </button>
 
 
-
                         <button
                             type="button"
-                            className={
-                                `condition-button ${
-                                    condition ===
-                                    "refurbished"
-                                        ? "active"
-                                        : ""
-                                }`
-                            }
+                            className={`condition-button ${
+                                condition ===
+                                "refurbished"
+                                    ? "active"
+                                    : ""
+                            }`}
                             onClick={() =>
                                 setCondition(
                                     "refurbished"
@@ -494,140 +517,209 @@ function AddProductRefined() {
                             Refurbished
                         </button>
 
-
                     </div>
-
 
                 </section>
 
 
-
                 
 
-               <section className="photos-section">
+                <section className="photos-section">
 
-            <h2 className="refined-section-heading">
-                 Product Photos
-            </h2>
-
-    <div className="photos-container">
-
-       
-        <button
-            type="button"
-            className="photo-upload-button"
-            onClick={() =>
-                photoInputRef.current?.click()
-            }
-        >
-            <img
-                src={cameraicon}
-                alt="Upload"
-            />
-
-            <span>Upload</span>
-        </button>
-
-        <input
-            ref={photoInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            hidden
-            onChange={handlePhotoUpload}
-        />
+                    <h2 className="refined-section-heading">
+                        Product Photos
+                    </h2>
 
 
-        
-        <div className="product-photo-box">
-
-            <img
-                src={wheatimage}
-                alt="Product"
-            />
-
-            <button
-                type="button"
-                className="product-photo-remove"
-            >
-                ×
-            </button>
-
-        </div>
+                    <div className="photos-container">
 
 
-        
-        <div className="product-photo-box">
+                        
 
-            <img
-                src={mountain}
-                alt="Product"
-            />
+                        {photos.length < 5 && (
 
-        </div>
+                            <button
+                                type="button"
+                                className="photo-upload-button"
+                                onClick={() =>
+                                    photoInputRef.current?.click()
+                                }
+                            >
 
-    </div>
+                                <img
+                                    src={cameraicon}
+                                    alt="Upload"
+                                />
 
-    <p className="refined-helper-text">
-        Add up to 5 photos. Clear, bright photos attract more
-        buyers.
-    </p>
+                                <span>
+                                    Upload
+                                </span>
 
-</section>
+                            </button>
 
+                        )}
+
+
+                        
+                        <input
+                            ref={photoInputRef}
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            hidden
+                            onChange={handlePhotoUpload}
+                        />
+
+
+                        
+
+                        <div className="product-photo-box">
+
+                            <img
+                                src={wheatimage}
+                                alt="Wheat product"
+                            />
+
+                        </div>
+
+
+
+                        <div className="product-photo-box">
+
+                            <img
+                                src={mountain}
+                                alt="Product"
+                            />
+
+                        </div>
+
+
+                      
+
+                        {photos.map((photo, index) => (
+
+                            <div
+                                className="product-photo-box"
+                                key={`${photo.file.name}-${index}`}
+                            >
+
+                                <img
+                                    src={photo.preview}
+                                    alt={`Uploaded product ${index + 1}`}
+                                />
+
+
+                                <button
+                                    type="button"
+                                    className="product-photo-remove"
+                                    onClick={() =>
+                                        removePhoto(index)
+                                    }
+                                    aria-label="Remove photo"
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        ))}
+
+                    </div>
+
+
+                    <p className="refined-helper-text">
+                        Add up to 5 photos. Clear, bright
+                        photos attract more buyers.
+                    </p>
+
+                </section>
 
 
                 
-
                 <section className="video-section">
 
-                <h2 className="refined-section-heading">
-                   Product Video
-                </h2>
+                    <h2 className="refined-section-heading">
+                        Product Video
+                    </h2>
 
-               <div className="video-container">
 
-                 <button
-                 type="button"
-                 className="video-upload-button"
-                 onClick={() =>
-                 videoInputRef.current?.click()
-                 }
-                 >
+                    <div className="video-container">
 
-            <img
-                src={video}
-                alt="Upload Video"
-                className="video-icon"
-            />
+                        <button
+                            type="button"
+                            className="video-upload-button"
+                            onClick={() =>
+                                videoInputRef.current?.click()
+                            }
+                        >
 
-            <span>
-                Upload Video
-            </span>
+                           
 
-        </button>
+                            <FiVideo
+                                className="video-icon"
+                            />
 
-        <input
-            ref={videoInputRef}
-            type="file"
-            accept="video/*"
-            hidden
-            onChange={handleVideoUpload}
-        />
 
-        </div>
+                            <span>
+                                {productVideo
+                                    ? "Change Video"
+                                    : "Upload Video"}
+                            </span>
 
-        <p className="refined-helper-text">
-        Add a short video to showcase product quality in action.
-       </p>
+                        </button>
 
-        </section>
+
+                        <input
+                            ref={videoInputRef}
+                            type="file"
+                            accept="video/*"
+                            hidden
+                            onChange={handleVideoUpload}
+                        />
+
+                    </div>
+
+
+                   
+
+                    {productVideo && (
+
+                        <div className="selected-video-info">
+
+                            <div className="selected-video-name">
+
+                                <FiVideo />
+
+                                <span>
+                                    {productVideo.name}
+                                </span>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                className="remove-video-button"
+                                onClick={removeVideo}
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                    )}
+
+
+                    <p className="refined-helper-text">
+                        Add a short video to showcase
+                        product quality in action.
+                    </p>
+
+                </section>
 
 
                
-
                 <section className="description-section">
-
 
                     <h2 className="refined-section-heading">
                         Description (Optional)
@@ -641,29 +733,16 @@ function AddProductRefined() {
                                 event.target.value
                             )
                         }
-                        placeholder={
-                            `Add details about quality, variety,
-packaging...`
-                        }
+                        placeholder="Add details about quality, variety, packaging..."
                     />
 
-
                 </section>
-
 
             </main>
 
 
-
-           
-            <div className="refined-bottom-space">
-            </div>
-
-
-
             
             <div className="refined-bottom-action">
-
 
                 <button
                     type="button"
@@ -675,22 +754,16 @@ packaging...`
                         Continue to Preview
                     </span>
 
-
                     <span className="continue-arrow">
                         →
                     </span>
 
-
                 </button>
-
 
             </div>
 
-
         </div>
-
     );
 }
-
 
 export default AddProductRefined;

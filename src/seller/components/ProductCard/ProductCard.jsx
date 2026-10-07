@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./ProductCard.css";
 
 function ProductCard({
@@ -11,12 +12,18 @@ function ProductCard({
     hidden = false
 }) {
 
+    
+    const [isAvailable, setIsAvailable] = useState(available);
+
+    const handleAvailabilityChange = () => {
+        setIsAvailable((prev) => !prev);
+    };
+
     return (
         <div
             className={`product-card ${hidden ? "hidden-product" : ""}`}
         >
 
-           
             <div className="product-image-container">
 
                 <img
@@ -38,7 +45,6 @@ function ProductCard({
             </div>
 
 
-            
             <div className="product-info">
 
                 <p className="product-category">
@@ -58,19 +64,18 @@ function ProductCard({
             </div>
 
 
-            
             <div className="product-availability">
 
                 <span>
-                    {available ? "Available" : "Unavailable"}
+                    {isAvailable ? "Available" : "Unavailable"}
                 </span>
 
                 <label className="availability-switch">
 
                     <input
                         type="checkbox"
-                        checked={available}
-                        readOnly
+                        checked={isAvailable}
+                        onChange={handleAvailabilityChange}
                     />
 
                     <span className="availability-slider"></span>

@@ -7,7 +7,7 @@
 
 .custom-product-page {
     width: 390px;
-    min-height: 1267px;
+    min-height: auto;
     max-width: 672px;
 
     margin: 0 auto;
@@ -28,7 +28,49 @@
 
 
 
-.custom-step-section {
+.custom-top-header {
+    width: 350px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+
+.close-button {
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 9999px;
+
+    background: #ffffff;
+
+    box-shadow: 0px 4px 14px 0px #0000000f;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #141b2b;
+
+    cursor: pointer;
+}
+
+
+
+.category-progress-section {
     width: 350px;
 
     display: flex;
@@ -38,7 +80,7 @@
 }
 
 
-.custom-step-text {
+.category-progress-text {
     width: 350px;
     height: 16px;
 
@@ -46,19 +88,25 @@
     align-items: center;
     justify-content: space-between;
 
+    font-family: "Poppins", sans-serif;
+
     font-size: 10px;
+    font-weight: 400;
+
     line-height: 16px;
 
     color: #65702d;
 }
 
 
-.custom-step-text span:last-child {
+.category-progress-text span:last-child {
     color: #8b8b8b;
 }
 
 
-.custom-progress {
+
+
+.category-progress-bars {
     width: 350px;
     height: 8px;
 
@@ -68,11 +116,10 @@
 }
 
 
-.progress-part {
-    width: 81.5px;
-    height: 8px;
+.category-progress-bar {
+    flex: 1;
 
-    flex-shrink: 0;
+    height: 8px;
 
     border-radius: 9999px;
 
@@ -80,18 +127,10 @@
 }
 
 
-.progress-part.completed {
+.category-progress-bar.active {
     background: #4d6f00;
 }
 
-
-.progress-part.active {
-    background: linear-gradient(
-        to right,
-        #4d6f00 50%,
-        #d3daef 50%
-    );
-}
 
 
 
@@ -163,6 +202,7 @@
 
 
 
+
 .product-info-card {
     width: 350px;
 
@@ -174,6 +214,7 @@
     gap: 12px;
 
     border: 1px solid #e5e7eb80;
+
     border-radius: 24px;
 
     background: #f9f9ff;
@@ -246,12 +287,16 @@
 }
 
 
+
+
 .change-button {
     padding: 0;
 
     border: none;
 
     background: transparent;
+
+    font-family: "Poppins", sans-serif;
 
     font-size: 10px;
 
@@ -260,6 +305,79 @@
     color: #4d6f00;
 
     cursor: pointer;
+}
+
+
+
+
+.custom-category-list {
+    width: 316px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-top: 4px;
+}
+
+
+
+.custom-category-option {
+    width: 100%;
+
+    padding: 6px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+.custom-category-option img {
+    width: 100%;
+    height: 70px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+.custom-category-option span {
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 16px;
+
+    text-align: center;
+
+    color: #141b2b;
+}
+
+
+.custom-category-option.selected {
+    border: 2px solid #4d6f00;
+
+    background: #f7faee;
 }
 
 
@@ -356,6 +474,8 @@
 }
 
 
+
+
 .suggestion-image {
     width: 96px;
     height: 112px;
@@ -393,7 +513,6 @@
 
 .photo-card {
     width: 350px;
-    height: 214px;
 
     padding: 16px;
 
@@ -408,7 +527,7 @@
 
     box-shadow: 0px 4px 14px 0px #0000000f;
 
-    overflow: hidden;
+    box-sizing: border-box;
 }
 
 
@@ -416,14 +535,15 @@
 
 .photo-title {
     width: 318px;
-    height: 24px;
 
     margin: 0;
 
     font-family: "Poppins", sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 24px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    line-height: 20px;
 
     color: #141b2b;
 }
@@ -431,45 +551,29 @@
 
 
 
-.photo-thumbnails {
-    width: 318px;
-    height: 102px;
-
-    padding-top: 4px;
-
-    display: flex;
-    align-items: flex-start;
-
-    gap: 12px;
-
-    overflow: hidden;
-}
-
-
-
-
 .main-photo-upload {
-    width: 98px;
-    height: 98px;
+    position: relative;
 
-    min-width: 98px;
-    max-width: 98px;
+    width: 318px;
+    height: 168px;
 
-    padding: 17px 10px;
-
-    flex: 0 0 98px;
+    padding: 0;
 
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
     gap: 8px;
 
-    border: 2px dashed #2aafa9;
+    border: 2px dashed #e1e4e8;
+
     border-radius: 16px;
 
-    background: #f1f3ff;
+    background: #f9fafb;
+
+    box-sizing: border-box;
 
     overflow: hidden;
 
@@ -478,9 +582,10 @@
 
 
 
+
 .camera-icon {
-    width: 25px;
-    height: 20px;
+    width: 36px;
+    height: 36px;
 
     display: flex;
     align-items: center;
@@ -488,110 +593,129 @@
 }
 
 
-
-
 .camera-icon img {
-    width: 25px !important;
-    height: 20px !important;
+    width: 36px;
+    height: 36px;
 
     object-fit: contain;
 }
-
-
 
 
 .main-photo-upload p {
     margin: 0;
 
     font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
 
-    color: #006a66;
+    font-size: 14px;
+    font-weight: 500;
+
+    line-height: 20px;
+
+    color: #4d6f00;
 }
 
 
 
+.main-selected-image {
+    position: absolute;
 
-.thumbnail {
-    position: relative;
+    inset: 0;
 
-    width: 98px !important;
-    height: 98px !important;
-
-    min-width: 98px;
-    max-width: 98px;
-
-    flex: 0 0 98px;
-
-    padding: 0;
-
-    display: block;
-
-    overflow: hidden;
-
-    border: 1px solid #bcc9c74d;
-    border-radius: 16px;
-
-    background: #dce2f780;
-
-    cursor: pointer;
-}
-
-
-
-.thumbnail img {
-    width: 98px !important;
-    height: 98px !important;
-
-    max-width: 98px !important;
-    max-height: 98px !important;
+    width: 100%;
+    height: 100%;
 
     display: block;
 
     object-fit: cover;
-
-    border-radius: 16px;
 }
 
 
 
-.thumbnail-selected {
+.photo-thumbnails {
+    width: 318px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0;
+
+    overflow: hidden;
+}
+
+
+
+.thumbnail {
+    width: 72px;
+    height: 64px;
+
+    min-width: 72px;
+
+    padding: 0;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #f3f4f6;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+
+
+.thumbnail.selected {
     border: 2px solid #88a91c;
 }
 
 
 
 
-
 .add-thumbnail {
-    width: 98px;
-    height: 98px;
+    width: 72px;
+    height: 64px;
 
-    min-width: 98px;
-    max-width: 98px;
-
-    flex: 0 0 98px;
-
-    padding: 0;
+    min-width: 72px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    overflow: hidden;
+    border: 1px dashed #dfe3e8;
 
-    border: 1px solid #bcc9c74d;
-    border-radius: 16px;
+    border-radius: 12px;
 
-    background: #dce2f780;
+    background: #f9fafb;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
 }
+
 
 .add-thumbnail span {
     font-size: 26px;
+    font-weight: 400;
 
-    color: #bcc9c7;
+    line-height: 1;
+
+    color: #667085;
 }
 
 
@@ -631,19 +755,6 @@
 
 
 
-.main-selected-image {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    background: #ffffff;
-}
-
-
-
 
 .photo-helper-text {
     width: 318px;
@@ -651,12 +762,15 @@
     margin: 0;
 
     font-family: "Poppins", sans-serif;
+
     font-size: 12px;
     font-weight: 400;
+
     line-height: 16px;
 
     color: #6b7280;
 }
+
 
 
 
@@ -736,18 +850,18 @@
 
 
 
-
 .next-button-wrapper {
     width: 350px;
-    height: 77px;
+    height: 56px;
 
-    padding: 8px 0 13px;
+    padding: 0;
+    margin: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: #ffffff;
+    background: transparent;
 }
 
 
@@ -816,9 +930,10 @@
     }
 
 
-    .custom-step-section,
-    .custom-step-text,
-    .custom-progress,
+    .custom-top-header,
+    .category-progress-section,
+    .category-progress-text,
+    .category-progress-bars,
     .custom-header,
     .product-info-card,
     .suggestion-card,

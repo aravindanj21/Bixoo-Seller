@@ -5,10 +5,9 @@
 .product-preview-page {
     width: 100%;
     max-width: 390px;
-    min-height: 1496px;
-
+    min-height: 100vh;
     margin: 0 auto;
-    padding-bottom: 128px;
+    padding-bottom: 0;
 
     font-family: "Poppins", Arial, sans-serif;
 
@@ -21,83 +20,17 @@
     position: relative;
 }
 
-
-
-
-.preview-top-nav {
+.preview-header {
     width: 390px;
-    max-width: 100%;
-    height: 64px;
 
-    padding: 16px 20px;
+    padding: 24px 20px 16px 20px;
 
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
 
-    background: #ffffff;
-}
+    gap: 20px;
 
-
-.preview-nav-btn,
-.preview-more-btn {
-    width: 32px;
-    height: 32px;
-
-    padding: 8px;
-
-    border: none;
-    border-radius: 9999px;
-
-    background: transparent;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #141b2b;
-
-    cursor: pointer;
-}
-
-
-.preview-nav-btn {
-    font-size: 20px;
-}
-
-
-.preview-more-btn {
-    font-size: 22px;
-    line-height: 1;
-}
-
-
-.preview-logo {
-    height: 24px;
-
-    display: flex;
-    align-items: center;
-
-    font-family: "Poppins", Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-
-    letter-spacing: -0.4px;
-
-    color: #141b2b;
-}
-
-
-
-.preview-main {
-    width: 390px;
-    max-width: 100%;
-
-    min-height: 1304px;
-
-    padding-left: 20px;
-    padding-right: 20px;
+    box-sizing: border-box;
 
     background: #fafcef;
 }
@@ -105,12 +38,41 @@
 
 
 
-.preview-progress {
-    width: 350px;
-    max-width: 100%;
-    height: 42px;
+.preview-header .close-button {
+    width: 32px;
+    height: 32px;
 
-    padding-top: 8px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 9999px;
+
+    background: #ffffff;
+
+    box-shadow: 0px 4px 14px 0px #0000000f;
+
+    font-family: "Poppins", Arial, sans-serif;
+
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #141b2b;
+
+    cursor: pointer;
+}
+
+
+
+
+.preview-header .category-progress-section {
+    width: 350px;
 
     display: flex;
     flex-direction: column;
@@ -119,32 +81,47 @@
 }
 
 
-.preview-progress-text {
-    width: 100%;
-    height: 18px;
+
+
+.preview-header .category-progress-text {
+    width: 350px;
+    height: 16px;
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
+    font-family: "Poppins", Arial, sans-serif;
 
-    color: #6b7280;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+
+    color: #65702d;
 }
 
 
-.preview-step-name {
-    color: #006a66;
+.preview-header .category-progress-text span:last-child {
+    color: #8b8b8b;
 }
 
 
-.preview-progress-track {
-    width: 100%;
+
+
+.preview-header .category-progress-bars {
+    width: 350px;
     height: 8px;
 
-    overflow: hidden;
+    display: flex;
+
+    gap: 8px;
+}
+
+
+.preview-header .category-progress-bar {
+    flex: 1;
+
+    height: 8px;
 
     border-radius: 9999px;
 
@@ -152,15 +129,23 @@
 }
 
 
-.preview-progress-fill {
-    width: 100%;
-    height: 100%;
-
-    border-radius: 9999px;
-
-    background: #006a66;
+.preview-header .category-progress-bar.active {
+    background: #4d6f00;
 }
 
+
+
+.preview-main {
+    width: 390px;
+    max-width: 100%;
+
+    min-height: auto;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    background: #fafcef;
+}
 
 
 
@@ -204,7 +189,7 @@
     width: 350px;
     max-width: 100%;
 
-    min-height: 1092px;
+    min-height: auto;
 
     padding-top: 24px;
     padding-bottom: 20px;
@@ -212,7 +197,7 @@
     display: flex;
     flex-direction: column;
 
-    gap: 24px;
+    gap: 16px;
 }
 
 
@@ -549,7 +534,17 @@
 .detail-label {
     font-size: 10px;
     font-weight: 400;
+    color: #6b7280;
 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
     color: #6b7280;
 }
 
@@ -616,7 +611,7 @@
     width: 390px;
     max-width: 100%;
 
-    padding: 16px 20px 24px;
+    padding: 8px 20px 12px;
 
     background: #fafcef;
 }
@@ -653,6 +648,15 @@
         background 0.2s ease;
 }
 
+.add-store-icon {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    color: #ffffff;
+}
+
 
 .add-store-button:hover {
     background: #7eaa32;
@@ -673,9 +677,15 @@
         max-width: 100%;
     }
 
-    .preview-top-nav,
+    .preview-header,
     .preview-main,
     .preview-bottom-action {
+        width: 100%;
+    }
+
+    .preview-header .category-progress-section,
+    .preview-header .category-progress-text,
+    .preview-header .category-progress-bars {
         width: 100%;
     }
 }

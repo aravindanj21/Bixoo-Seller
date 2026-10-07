@@ -29,10 +29,10 @@ function App() {
                 element={<AddProductCategoryPage />}
                 />
 
-                <Route
-                 path="/choose-product"
-                 element={<ChooseProduct />}
-                />
+               <Route
+               path="/choose-product/:categoryId"
+               element={<ChooseProduct />}
+               />
 
                 <Route
                  path="/add-custom-product"

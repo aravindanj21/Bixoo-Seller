@@ -21,7 +21,6 @@
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-
 .add-product-icon {
     width: 64px;
     height: 64px;
@@ -44,11 +43,9 @@
     padding: 0;
 }
 
-
 .add-product-icon:hover {
     background: #7ca735;
 }
-
 
 .add-product-title {
     margin: 0;
@@ -60,7 +57,6 @@
 
     line-height: 1;
 }
-
 
 .add-product-description {
     margin: 0;

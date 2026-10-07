@@ -1,12 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
 
-function AddProduct({ onAddProduct }) {
+function AddProduct() {
+    const navigate = useNavigate();
+
+    const handleAddProduct = () => {
+        navigate("/add-product/category");
+    };
+
     return (
         <div className="add-product-card">
 
             <button
                 className="add-product-icon"
-                onClick={onAddProduct}
+                onClick={handleAddProduct}
                 type="button"
             >
                 +
@@ -17,7 +24,7 @@ function AddProduct({ onAddProduct }) {
             </h3>
 
             <p className="add-product-description">
-                Create a new product listing for wholesale buyers
+                List a new product in your store
             </p>
 
         </div>
@@ -25,4 +32,3 @@ function AddProduct({ onAddProduct }) {
 }
 
 export default AddProduct;
-
