@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../MyStore/MyStoreCommon.css";
 import "./AddProductCategory.css";
 
 import background from "../../../assets/Background.png";

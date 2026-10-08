@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 
+import "./MyStoreCommon.css";
 import "./MyStore.css";
 
 import AddProduct from "../AddProduct/AddProduct";

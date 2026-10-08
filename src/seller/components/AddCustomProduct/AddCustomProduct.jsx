@@ -8,7 +8,6 @@ import coffees from "../../../assets/coffees.jpg";
 import corns from "../../../assets/corns.jpg";
 import photoupload from "../../../assets/photoupload.png";
 
-
 import background from "../../../assets/Background.png";
 import vehicles from "../../../assets/vehicles.png";
 import machinery from "../../../assets/machinery.png";
@@ -18,8 +17,6 @@ import othercategories from "../../../assets/othercategories.png";
 
 function AddCustomProduct() {
     const navigate = useNavigate();
-
-   
 
     const [productName, setProductName] = useState("");
     const [description, setDescription] = useState("");
@@ -32,7 +29,6 @@ function AddCustomProduct() {
         useState(false);
 
     
-
     const categories = [
         {
             id: 1,
@@ -66,30 +62,57 @@ function AddCustomProduct() {
         },
     ];
 
-   
+    
 
-    const suggestedImages = [
-        {
-            id: 1,
-            image: rices,
-        },
-        {
-            id: 2,
-            image: coffees,
-        },
-        {
-            id: 3,
-            image: corns,
-        },
-    ];
+    const categoryImages = {
+        Agriculture: [
+            rices,
+            coffees,
+            corns,
+        ],
+
+        Vehicles: [
+            vehicles,
+            vehicles,
+            vehicles,
+        ],
+
+        Machinery: [
+            machinery,
+            machinery,
+            machinery,
+        ],
+
+        Electronics: [
+            electronics,
+            electronics,
+            electronics,
+        ],
+
+        "Raw Materials": [
+            rawmaterials,
+            rawmaterials,
+            rawmaterials,
+        ],
+
+        "Other Categories": [
+            othercategories,
+            othercategories,
+            othercategories,
+        ],
+    };
 
     
 
+    const suggestedImages =
+        categoryImages[selectedCategory] || [];
+
+    
     const handleSuggestedImage = (image) => {
         setSelectedImage(image);
     };
 
-   
+    
 
     const handlePhotoUpload = (event) => {
         const file = event.target.files?.[0];
@@ -100,12 +123,19 @@ function AddCustomProduct() {
 
         if (!file.type.startsWith("image/")) {
             alert("Please select a valid image file.");
+            event.target.value = "";
             return;
         }
 
-        const imageUrl = URL.createObjectURL(file);
+        const reader = new FileReader();
 
-        setSelectedImage(imageUrl);
+        reader.onload = () => {
+            setSelectedImage(reader.result);
+        };
+
+        reader.readAsDataURL(file);
+
+        event.target.value = "";
     };
 
     
@@ -114,10 +144,15 @@ function AddCustomProduct() {
         setShowCategories((previous) => !previous);
     };
 
+    
+
     const handleCategorySelect = (category) => {
         setSelectedCategory(category.name);
 
-       
+        
+        setSelectedImage(null);
+
+        
         setShowCategories(false);
     };
 
@@ -125,38 +160,35 @@ function AddCustomProduct() {
 
     const handleNext = () => {
 
-     
-        if (!productName.trim()) {
-            alert("Please enter the product name.");
-            return;
-        }
+    if (!productName.trim()) {
+        alert("Please enter the product name.");
+        return;
+    }
 
-        
-        if (!selectedImage) {
-            alert("Please select or upload a product photo.");
-            return;
-        }
+    if (!selectedImage) {
+        alert("Please select or upload a product photo.");
+        return;
+    }
 
-        const productData = {
-            category: selectedCategory,
-            productName: productName.trim(),
-            description: description.trim(),
-            selectedImage,
-        };
-
-        console.log("Custom Product Data:", productData);
-
-        
-        navigate("/add-product-refined", {
-            state: productData,
-        });
+    const productData = {
+        category: selectedCategory,
+        productName: productName.trim(),
+        description: description.trim(),
+        selectedImage,
     };
+
+    console.log("Sending Category:", selectedCategory);
+    console.log("Sending Product Data:", productData);
+
+    navigate("/add-product-refined", {
+        state: productData,
+    });
+};
 
     return (
         <div className="custom-product-page">
 
            
-
             <div className="custom-top-header">
 
                 <button
@@ -188,8 +220,7 @@ function AddCustomProduct() {
 
             </div>
 
-
-            
+           
 
             <div className="custom-header">
 
@@ -216,9 +247,7 @@ function AddCustomProduct() {
 
             </div>
 
-
-            
-
+           
             <div className="product-info-card">
 
                 <div className="category-box">
@@ -237,7 +266,6 @@ function AddCustomProduct() {
 
                     </div>
 
-
                     <button
                         type="button"
                         className="change-button"
@@ -247,7 +275,6 @@ function AddCustomProduct() {
                     </button>
 
                 </div>
-
 
                
 
@@ -287,21 +314,20 @@ function AddCustomProduct() {
 
                 )}
 
+                
 
-               
                 <div className="selling-field">
 
-                    <label>
+                    <label htmlFor="custom-product-name">
                         What are you selling?
                     </label>
 
                     <input
+                        id="custom-product-name"
                         type="text"
                         value={productName}
                         onChange={(event) =>
-                            setProductName(
-                                event.target.value
-                            )
+                            setProductName(event.target.value)
                         }
                         placeholder="e.g., Premium Basmati Rice"
                     />
@@ -309,7 +335,6 @@ function AddCustomProduct() {
                 </div>
 
             </div>
-
 
             
 
@@ -322,26 +347,24 @@ function AddCustomProduct() {
 
                 <div className="suggestion-images">
 
-                    {suggestedImages.map((item) => (
+                    {suggestedImages.map((image, index) => (
 
                         <button
                             type="button"
-                            key={item.id}
+                            key={`${selectedCategory}-${index}`}
                             className={`suggestion-image ${
-                                selectedImage === item.image
+                                selectedImage === image
                                     ? "selected"
                                     : ""
                             }`}
                             onClick={() =>
-                                handleSuggestedImage(
-                                    item.image
-                                )
+                                handleSuggestedImage(image)
                             }
                         >
 
                             <img
-                                src={item.image}
-                                alt="Suggested product"
+                                src={image}
+                                alt={`${selectedCategory} product ${index + 1}`}
                             />
 
                         </button>
@@ -352,15 +375,13 @@ function AddCustomProduct() {
 
             </div>
 
-
-            
+          
 
             <div className="photo-card">
 
                 <label className="photo-title">
                     Product Photos
                 </label>
-
 
                 
 
@@ -402,66 +423,35 @@ function AddCustomProduct() {
 
                 </label>
 
-
                 
 
                 <div className="photo-thumbnails">
 
-                    <button
-                        type="button"
-                        className={`thumbnail ${
-                            selectedImage === rices
-                                ? "selected"
-                                : ""
-                        }`}
-                        onClick={() =>
-                            handleSuggestedImage(rices)
-                        }
-                    >
-                        <img
-                            src={rices}
-                            alt="Rice"
-                        />
-                    </button>
+                    {suggestedImages.map((image, index) => (
 
+                        <button
+                            type="button"
+                            key={`${selectedCategory}-${index}`}
+                            className={`thumbnail ${
+                                selectedImage === image
+                                    ? "selected"
+                                    : ""
+                            }`}
+                            onClick={() =>
+                                handleSuggestedImage(image)
+                            }
+                        >
 
-                    <button
-                        type="button"
-                        className={`thumbnail ${
-                            selectedImage === coffees
-                                ? "selected"
-                                : ""
-                        }`}
-                        onClick={() =>
-                            handleSuggestedImage(coffees)
-                        }
-                    >
-                        <img
-                            src={coffees}
-                            alt="Coffee"
-                        />
-                    </button>
+                            <img
+                                src={image}
+                                alt={`${selectedCategory} ${index + 1}`}
+                            />
 
+                        </button>
 
-                    <button
-                        type="button"
-                        className={`thumbnail ${
-                            selectedImage === corns
-                                ? "selected"
-                                : ""
-                        }`}
-                        onClick={() =>
-                            handleSuggestedImage(corns)
-                        }
-                    >
-                        <img
-                            src={corns}
-                            alt="Corn"
-                        />
-                    </button>
+                    ))}
 
-
-                  
+                   
 
                     <label className="add-thumbnail">
 
@@ -480,28 +470,26 @@ function AddCustomProduct() {
 
             </div>
 
-
-
+            
             <div className="description-card">
 
-                <label>
+                <label htmlFor="custom-product-description">
                     Brief Description (Optional)
                 </label>
 
                 <textarea
+                    id="custom-product-description"
                     value={description}
                     onChange={(event) =>
-                        setDescription(
-                            event.target.value
-                        )
+                        setDescription(event.target.value)
                     }
                     placeholder="Add specific variety, grade, or origin details..."
                 />
 
             </div>
 
-
           
+
             <div className="next-button-wrapper">
 
                 <button
@@ -509,6 +497,7 @@ function AddCustomProduct() {
                     className="next-details-button"
                     onClick={handleNext}
                 >
+
                     <span>
                         Next: Add Details
                     </span>
@@ -516,6 +505,7 @@ function AddCustomProduct() {
                     <span className="next-arrow">
                         →
                     </span>
+
                 </button>
 
             </div>

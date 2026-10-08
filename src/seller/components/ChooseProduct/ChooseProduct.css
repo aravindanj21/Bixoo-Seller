@@ -1,27 +1,9 @@
-* {
-    box-sizing: border-box;
-}
-
 .choose-product-page {
-    width: 390px;
     min-height: 100vh;
-    max-width: 768px;
-
-    margin: 0 auto;
-
-    background: #f8fbea;
     font-family: "Poppins", sans-serif;
-
-    overflow-x: hidden;
 }
 
 
-
-.choose-product-header {
-    width: 350px;
-
-    margin: 0 auto;
-}
 
 .step-text {
     padding-top: 16px;
@@ -32,10 +14,8 @@
     color: #4b5563;
 }
 
-
-
 .choose-product-header h1 {
-    width: 350px;
+    width: 100%;
     height: 36px;
 
     margin: 0;
@@ -48,14 +28,13 @@
 
     line-height: 28px;
 
-    color: #1f2937;
+    color: var(--store-heading-color);
 }
 
 
 
-
 .choose-progress-section {
-    width: 350px;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
@@ -76,11 +55,11 @@
 
     line-height: 16px;
 
-    color: #65702d;
+    
 }
 
 .choose-progress-bars {
-    width: 350px;
+    width: 100%;
     height: 10px;
 
     display: flex;
@@ -93,27 +72,22 @@
     flex: 1;
     height: 10px;
 
-    background: #d3daef;
-
     border-radius: 9999px;
-}
 
-.choose-progress-bar.active {
-    background: #4f7905;
+    
 }
-
 
 
 
 .choose-description-container {
-    width: 350px;
-    height: 56px;
+    width: 100%;
+    min-height: 56px;
 
     padding-top: 16px;
 }
 
 .choose-description-container p {
-    width: 350px;
+    width: 100%;
 
     margin: 0;
 
@@ -131,7 +105,7 @@
 
 
 .product-search-container {
-    width: 350px;
+    width: 100%;
     height: 79px;
 
     padding-top: 16px;
@@ -141,12 +115,12 @@
 .product-search {
     position: relative;
 
-    width: 350px;
+    width: 100%;
     height: 47px;
 }
 
 .product-search input {
-    width: 350px;
+    width: 100%;
     height: 47px;
 
     padding-top: 12px;
@@ -154,18 +128,15 @@
     padding-bottom: 11px;
     padding-left: 48px;
 
-    background: #ffffff;
-
-    border: 1px solid #bcc9c7;
+    border: 1px solid var(--store-border, #bcc9c7);
 
     border-radius: 22px;
 
-    box-shadow: 0px 4px 14px 0px #0000000f;
+    box-shadow: 0 4px 14px #0000000f;
 
     outline: none;
 
     font-family: "Poppins", sans-serif;
-
     font-size: 12px;
 
     color: #374151;
@@ -174,9 +145,6 @@
 .product-search input::placeholder {
     color: #9ca3af;
 }
-
-
-
 
 .product-search-icon {
     position: absolute;
@@ -200,7 +168,7 @@
 .agriculture-banner {
     position: relative;
 
-    width: 390px;
+    width: 100%;
     height: 180px;
 
     margin-top: 16px;
@@ -212,16 +180,10 @@
     overflow: hidden;
 }
 
-
-
 .banner-overlay {
     position: absolute;
 
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
+    inset: 0;
 
     display: flex;
     align-items: center;
@@ -229,8 +191,6 @@
 
     background: rgba(0, 0, 0, 0.25);
 }
-
-
 
 .banner-category-name {
     margin: 0;
@@ -246,24 +206,19 @@
 
 
 
-
-
 .product-feed {
     position: relative;
 
-    width: 390px;
+    width: 100%;
 
     margin-top: -24px;
 
-    padding-top: 32px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    padding: 32px 20px 20px;
 
-    background: #f8fbea;
+    background: var(--store-bg);
 
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
+    border-top-left-radius: var(--store-card-radius);
+    border-top-right-radius: var(--store-card-radius);
 
     z-index: 2;
 }
@@ -272,20 +227,13 @@
 
 
 .product-grid {
-    width: 350px;
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 16px;
-
-    margin: 0 auto;
+    width: 100%;
 }
 
 
 
 .product-story-card {
-    width: 167px;
+    width: 100%;
     height: 180px;
 
     padding: 0;
@@ -293,16 +241,12 @@
     border: none;
     border-radius: 20px;
 
-    background: #ffffff;
-
     overflow: hidden;
 
     display: flex;
     flex-direction: column;
 
     cursor: pointer;
-
-    box-sizing: border-box;
 }
 
 .product-story-card > img {
@@ -318,7 +262,6 @@
     display: block;
 
     object-fit: cover;
-
     object-position: center;
 
     flex-shrink: 0;
@@ -344,14 +287,11 @@
     line-height: 16px;
 
     overflow: hidden;
-
-    box-sizing: border-box;
 }
 
 
 
 .add-custom-product {
-    width: 350px;
     height: 54px;
 
     margin-top: 32px;
@@ -359,7 +299,6 @@
     padding: 16px 24px;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
@@ -368,8 +307,6 @@
     background: transparent;
 
     border: 1px dashed #8db847;
-
-    border-radius: 24px;
 
     color: #8db847;
 
@@ -397,4 +334,6 @@
 
     font-size: 15px;
     line-height: 1;
+
+    flex-shrink: 0;
 }

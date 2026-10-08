@@ -1,10 +1,15 @@
 import "./SellerHeader.css";
+
 import logo from "../../assets/logo.jpg";
-import Icon from "../../assets/Icon.png"
-import boxicon from "../../assets/boxicon.png"
-import exploreicon from "../../assets/exploreicon.png"
+
+import { FiShoppingBag, FiBox, FiCompass } from "react-icons/fi";
+
+import { useNavigate } from "react-router-dom";
 
 function SellerHeader() {
+
+    const navigate = useNavigate();
+
     return (
         <header className="seller-header">
 
@@ -12,8 +17,20 @@ function SellerHeader() {
                 <img src={logo} alt="Logo" />
             </div>
 
-            <div className="seller-header-item">
-                <img src={Icon} alt="Logo" />
+            <div
+                className="seller-header-item"
+                onClick={() => navigate("/seller/my-store")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        navigate("/seller/my-store");
+                    }
+                }}
+            >
+                <FiShoppingBag className="seller-header-icon" />
+
                 <div>
                     <strong>My Store</strong>
                     <small>Sell Inventory</small>
@@ -21,7 +38,7 @@ function SellerHeader() {
             </div>
 
             <div className="seller-header-item">
-               <img src={boxicon} alt="Logo" />
+                <FiBox className="seller-header-icon" />
 
                 <div>
                     <strong>BidBox</strong>
@@ -30,7 +47,7 @@ function SellerHeader() {
             </div>
 
             <div className="seller-header-item">
-                <img src={exploreicon} alt="Logo" />
+                <FiCompass className="seller-header-icon" />
 
                 <div>
                     <strong>Explore</strong>

@@ -83,11 +83,13 @@
 
 
 
-.seller-header-item img {
+.seller-header-icon {
     width: 20px;
     height: 20px;
 
-    object-fit: contain;
+    color: #364904;
+
+    flex-shrink: 0;
 
     margin-bottom: 2px;
 }
@@ -126,6 +128,14 @@
     white-space: nowrap;
 }
 
+.seller-header-item {
+    cursor: pointer;
+}
+
+.seller-header-item:hover {
+    background: #f4f8e6;
+}
+
 
 
 
@@ -152,7 +162,7 @@
         font-size: 6px;
     }
 
-    .seller-header-item img {
+    .seller-header-icon {
         width: 18px;
         height: 18px;
     }

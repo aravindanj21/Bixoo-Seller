@@ -1,16 +1,21 @@
-.my-store {
-    width: 390px;
-    min-height: 2000px;
+.my-store-header {
+    width: 100%;
+}
 
-    margin: 0 auto;
-    padding: 20px;
+.my-store-header h2 {
+    margin: 0;
 
-    display: flex;
-    flex-direction: column;
+    font-size: 20px;
+    font-weight: 600;
 
-    gap: 16px;
+    color: #222222;
+}
 
-    background: #f8fbed;
+.my-store-header p {
+    margin: 8px 0 0;
 
-    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: 400;
+
+    color: #666666;
 }

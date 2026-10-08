@@ -33,45 +33,75 @@ function ProductPreview() {
 
 
     
-    const category =
-        productData.category || "Grains & Cereals";
+    const category = productData.category || "";
 
-    const productName =
-        productData.productName ||
-        "Premium Organic Sharbati Wheat";
+const productName = productData.productName || "";
 
-    const description =
-        productData.description ||
-        "Grade A, Export Quality";
+const description = productData.description || "";
 
-    const quantity =
-        productData.quantity || 50;
+const quantity = productData.quantity ?? 0;
 
-    const minPrice =
-        productData.pricing?.minPrice || "2400";
+const minPrice = productData.pricing?.minPrice ?? "";
 
-    const maxPrice =
-        productData.pricing?.maxPrice || "2600";
+const maxPrice = productData.pricing?.maxPrice ?? "";
 
-    const negotiable =
-        productData.pricing?.negotiable || false;
+const negotiable = productData.pricing?.negotiable ?? false;
 
-    const freeDelivery =
-        productData.delivery?.freeDelivery || false;
+const freeDelivery = productData.delivery?.freeDelivery ?? false;
 
-    const condition =
-        productData.condition || "new";
+const condition = productData.condition || "";
 
-    const uploadedPhotos =
-        productData.photos || [];
+const uploadedPhotos = productData.photos || [];
 
-    const productVideo =
-        productData.video || null;
+const productVideo = productData.video || null;
 
-    const customProductImage =
-        productData.selectedImage || null;
+const customProductImage = productData.selectedImage || null;
 
 
+
+const categoryUnits = {
+    Agriculture: {
+        quantityUnit: "Tons",
+        priceUnit: "Ton",
+    },
+
+    Vehicles: {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+
+    Machinery: {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+
+    Electronics: {
+        quantityUnit: "Pieces",
+        priceUnit: "Piece",
+    },
+
+    "Raw Materials": {
+        quantityUnit: "Kg",
+        priceUnit: "Kg",
+    },
+
+    "Other Categories": {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+};
+
+const currentUnit = categoryUnits[category];
+
+const quantityUnit =
+    productData.quantityUnit ||
+    currentUnit?.quantityUnit ||
+    "";
+
+const priceUnit =
+    productData.pricing?.priceUnit ||
+    currentUnit?.priceUnit ||
+    "";
     
 
     const photoList = [];
@@ -363,7 +393,7 @@ function ProductPreview() {
                             )}
 
                             <small>
-                                /Ton
+                             / {priceUnit}
                             </small>
 
                         </div>
@@ -390,9 +420,8 @@ function ProductPreview() {
                             </span>
 
                             <strong>
-                                {quantity} Tons
+                             {quantity} {quantityUnit}
                             </strong>
-
                         </div>
 
                     </div>
@@ -417,7 +446,7 @@ function ProductPreview() {
                             </span>
 
                             <strong>
-                                {quantity} Tons
+                             {quantity} {quantityUnit}
                             </strong>
 
                         </div>

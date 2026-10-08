@@ -10,11 +10,54 @@ import wheatimage from "../../../assets/wheatimage.jpg";
 import mountain from "../../../assets/mountain.png";
 
 function AddProductRefined() {
+    
     const navigate = useNavigate();
     const location = useLocation();
 
     
     const previousProductData = location.state || {};
+    console.log("Received Product Data:", previousProductData);
+    console.log("Received Category:", previousProductData.category);
+
+
+    const selectedCategory =
+    previousProductData.category || "Agriculture";
+
+const categoryUnits = {
+    Agriculture: {
+        quantityUnit: "Tons",
+        priceUnit: "Ton",
+    },
+
+    Vehicles: {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+
+    Machinery: {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+
+    Electronics: {
+        quantityUnit: "Pieces",
+        priceUnit: "Piece",
+    },
+
+    "Raw Materials": {
+        quantityUnit: "Kg",
+        priceUnit: "Kg",
+    },
+
+    "Other Categories": {
+        quantityUnit: "Units",
+        priceUnit: "Unit",
+    },
+};
+
+const currentUnit =
+    categoryUnits[selectedCategory] ||
+    categoryUnits["Other Categories"];
 
     
 
@@ -191,32 +234,30 @@ function AddProductRefined() {
             );
             return;
         }
+const productDetails = {
+    ...previousProductData,
 
-        const productDetails = {
+    category: selectedCategory,
 
-            
-            ...previousProductData,
+    quantity,
+    quantityUnit: currentUnit.quantityUnit,
 
-            quantity,
+    pricing: {
+        minPrice,
+        maxPrice,
+        priceUnit: currentUnit.priceUnit,
+        negotiable,
+    },
 
-            pricing: {
-                minPrice,
-                maxPrice,
-                negotiable,
-            },
+    delivery: {
+        freeDelivery,
+    },
 
-            delivery: {
-                freeDelivery,
-            },
-
-            condition,
-
-            photos,
-
-            video: productVideo,
-
-            description: description.trim(),
-        };
+    condition,
+    photos,
+    video: productVideo,
+    description: description.trim(),
+};
 
         console.log(
             "Final Product Details:",
@@ -315,9 +356,8 @@ function AddProductRefined() {
                             </span>
 
                             <span className="quantity-unit">
-                                Tons
+                              {currentUnit.quantityUnit}
                             </span>
-
                         </div>
 
 
@@ -396,7 +436,7 @@ function AddProductRefined() {
                             />
 
                             <span className="price-unit">
-                                / Ton
+                             / {currentUnit.priceUnit}
                             </span>
 
                         </div>
