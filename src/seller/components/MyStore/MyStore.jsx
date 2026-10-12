@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import "./MyStoreCommon.css";
 import "./MyStore.css";
@@ -6,165 +6,120 @@ import "./MyStore.css";
 import AddProduct from "../AddProduct/AddProduct";
 import ProductCard from "../ProductCard/ProductCard";
 
-import grains from "../../../assets/grains.jpg";
-import material from "../../../assets/material.jpg";
-import freshproduct from "../../../assets/freshproduct.jpg";
-import edibleoils from "../../../assets/edibleoils.jpg";
-
+import { getProducts } from "../../Services/productService";
 
 function MyStore() {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const location = useLocation();
+    useEffect(() => {
+        let active = true;
 
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                setError("");
 
-    
+                const data = await getProducts();
 
-    const newProduct =
-        location.state?.newProduct || null;
+                if (active) {
+                    setProducts(
+                        Array.isArray(data)
+                            ? data
+                            : data?.products || []
+                    );
+                }
+            } catch (err) {
+                console.error("Error fetching products:", err);
 
+                if (active) {
+                    setError("Unable to load products.");
+                }
+            } finally {
+                if (active) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchProducts();
+
+        return () => {
+            active = false;
+        };
+    }, []);
 
     return (
-
         <div className="my-store">
-
-
             <div className="my-store-header">
-
-                <h2>
-                    My Store
-                </h2>
-
+                <h2>My Store</h2>
                 <p>
                     Manage your active inventory and listings.
                 </p>
-
             </div>
-
-
-           
 
             <AddProduct />
 
-
-            
-
-            {newProduct && (
-
-                <ProductCard
-
-                    image={
-                        newProduct.photos?.[0]
-                    }
-
-                    category={
-                        newProduct.category
-                    }
-
-                    name={
-                        newProduct.productName
-                    }
-
-                    quantity={
-                        `${newProduct.quantity} Tons`
-                    }
-
-                    price={
-                        newProduct.pricing?.minPrice
-                    }
-
-                    unit="Ton"
-
-                    available={true}
-
-                />
-
+            {loading && (
+                <p>Loading products...</p>
             )}
 
+            {error && (
+                <p className="error-message" role="alert">
+                    {error}
+                </p>
+            )}
 
-            
-            <ProductCard
+            {!loading && !error && products.length === 0 && (
+                <p>No products available.</p>
+            )}
 
-                image={grains}
+            {!loading && !error && products.map((product, index) => {
+                const firstPhoto = product.photos?.[0];
 
-                category="Grains & Cereals"
+                const productImage =
+                    product.image ||
+                    product.selectedImage ||
+                    (typeof firstPhoto === "string"
+                        ? firstPhoto
+                        : firstPhoto?.preview) ||
+                    "";
 
-                name="Premium Basmati Rice - Export Quality"
+                const productName =
+                    product.productName ||
+                    product.name ||
+                    "";
 
-                quantity="50kg Bag"
+                const productPrice =
+                    product.pricing?.minPrice ??
+                    product.price ??
+                    0;
 
-                price="4,500"
+                const productUnit =
+                    product.pricing?.priceUnit ||
+                    product.unit ||
+                    "";
 
-                unit="bag"
+                const productQuantity =
+                    product.quantity ?? "";
 
-                available={true}
-
-            />
-
-
-            
-
-            <ProductCard
-
-                image={material}
-
-                category="Packaging Materials"
-
-                name="Heavy Duty Corrugated Carton Boxes"
-
-                quantity="5 Ply"
-
-                price="45"
-
-                unit="unit"
-
-                available={true}
-
-            />
-
-
-            
-            <ProductCard
-
-                image={freshproduct}
-
-                category="Fresh Produce"
-
-                name="Organic Hybrid Tomatoes - Grade A"
-
-                price="32"
-
-                unit="kg"
-
-                available={false}
-
-                hidden={true}
-
-            />
-
-
-
-            <ProductCard
-
-                image={edibleoils}
-
-                category="Edible Oils"
-
-                name="Cold Pressed Groundnut Oil"
-
-                quantity="15L Tin"
-
-                price="2,850"
-
-                unit="tin"
-
-                available={true}
-
-            />
-
+                return (
+                    <ProductCard
+                        key={product.id ?? index}
+                        image={productImage}
+                        category={product.category || ""}
+                        name={productName}
+                        quantity={productQuantity}
+                        price={productPrice}
+                        unit={productUnit}
+                        available={product.available ?? true}
+                        hidden={product.hidden ?? false}
+                    />
+                );
+            })}
         </div>
-
     );
 }
-
 
 export default MyStore;

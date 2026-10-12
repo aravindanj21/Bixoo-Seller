@@ -1,100 +1,122 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "../MyStore/MyStoreCommon.css";
 import "./AddProductCategory.css";
 
-import background from "../../../assets/Background.png";
-import vehicles from "../../../assets/vehicles.png";
-import machinery from "../../../assets/machinery.png";
-import electronics from "../../../assets/electronics.png";
-import rawmaterials from "../../../assets/rawmaterials.png";
-import othercategories from "../../../assets/othercategories.png";
 import search from "../../../assets/search.png";
 
+import { getCategories } from "../../Services/categoryService";
+
 function AddProductCategory() {
+
     const navigate = useNavigate();
 
-   
     const [searchTerm, setSearchTerm] = useState("");
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const categories = [
-        {
-            id: 1,
-            name: "Agriculture",
-            image: background,
-        },
-        {
-            id: 2,
-            name: "Vehicles",
-            image: vehicles,
-        },
-        {
-            id: 3,
-            name: "Machinery",
-            image: machinery,
-        },
-        {
-            id: 4,
-            name: "Electronics",
-            image: electronics,
-        },
-        {
-            id: 5,
-            name: "Raw Materials",
-            image: rawmaterials,
-        },
-        {
-            id: 6,
-            name: "Other Categories",
-            image: othercategories,
-        },
-    ];
+    useEffect(() => {
 
-    
+        let active = true;
+
+        const fetchCategories = async () => {
+
+            try {
+                setLoading(true);
+                setError("");
+
+                const data = await getCategories();
+
+                if (active) {
+                    const categoryList = Array.isArray(data)
+                        ? data
+                        : data.categories || [];
+
+                    setCategories(categoryList);
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Error fetching categories:",
+                    error
+                );
+
+                if (active) {
+                    setError("Unable to load categories.");
+                }
+
+            } finally {
+
+                if (active) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchCategories();
+
+        return () => {
+            active = false;
+        };
+
+    }, []);
+
+
     const filteredCategories = categories.filter((category) =>
         category.name
             .toLowerCase()
-            .includes(searchTerm.toLowerCase())
+            .includes(searchTerm.trim().toLowerCase())
     );
 
+
     const handleCategoryClick = (category) => {
+
         console.log("Selected category:", category);
 
-        navigate(`/choose-product/${category.id}`);
+        navigate(`/choose-product/${category.id}`, {
+            state: {
+                selectedCategory: category
+            }
+        });
     };
+
 
     return (
         <div className="add-category-page">
 
-            
             <div className="category-top-nav">
 
-    <button
-        className="close-button"
-        onClick={() => navigate(-1)}
-    >
-        ×
-    </button>
+                <button
+                    type="button"
+                    className="close-button"
+                    onClick={() => navigate(-1)}
+                >
+                    ×
+                </button>
 
-    <div className="category-progress-section">
+                <div className="category-progress-section">
 
-        <div className="category-progress-text">
-            <span>Step 1 of 5</span>
-            <span>Category</span>
-        </div>
+                    <div className="category-progress-text">
+                        <span>Step 1 of 5</span>
+                        <span>Category</span>
+                    </div>
 
-        <div className="category-progress-bars">
-            <div className="category-progress-bar active"></div>
-            <div className="category-progress-bar"></div>
-            <div className="category-progress-bar"></div>
-            <div className="category-progress-bar"></div>
-            <div className="category-progress-bar"></div>
-        </div>
+                    <div className="category-progress-bars">
+                        <div className="category-progress-bar active"></div>
+                        <div className="category-progress-bar"></div>
+                        <div className="category-progress-bar"></div>
+                        <div className="category-progress-bar"></div>
+                        <div className="category-progress-bar"></div>
+                    </div>
 
-    </div>
+                </div>
 
-</div>
-            
+            </div>
+
+
             <div className="category-header">
 
                 <h1>What are you selling?</h1>
@@ -107,7 +129,7 @@ function AddProductCategory() {
 
             </div>
 
-            
+
             <div className="category-search">
 
                 <span className="search-icon">
@@ -123,48 +145,73 @@ function AddProductCategory() {
 
             </div>
 
-            
+
             <div className="category-grid">
 
-                {filteredCategories.length > 0 ? (
+                {loading && (
+                    <p className="no-category">
+                        Loading categories...
+                    </p>
+                )}
 
-                    filteredCategories.map((category) => (
+                {!loading && error && (
+                    <p className="no-category" role="alert">
+                        {error}
+                    </p>
+                )}
 
-                        <div
-                            className="category-card"
-                            key={category.id}
-                            onClick={() =>
-                                handleCategoryClick(category)
-                            }
-                        >
+                {!loading && !error && (
+                    filteredCategories.length > 0 ? (
 
-                            <img
-                                src={category.image}
-                                alt={category.name}
-                            />
+                        filteredCategories.map((category) => (
 
-                            <div className="category-card-bottom">
+                            <div
+                                className="category-card"
+                                key={category.id}
+                                role="button"
+                                tabIndex={0}
+                                onClick={() =>
+                                    handleCategoryClick(category)
+                                }
+                                onKeyDown={(e) => {
+                                    if (
+                                        e.key === "Enter" ||
+                                        e.key === " "
+                                    ) {
+                                        e.preventDefault();
+                                        handleCategoryClick(category);
+                                    }
+                                }}
+                            >
 
-                                <span>
-                                    {category.name}
-                                </span>
+                                <img
+                                    src={category.image}
+                                    alt={category.name}
+                                />
 
-                                <span className="arrow">
-                                    ›
-                                </span>
+                                <div className="category-card-bottom">
+
+                                    <span>
+                                        {category.name}
+                                    </span>
+
+                                    <span className="arrow">
+                                        ›
+                                    </span>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                        ))
 
-                    ))
+                    ) : (
 
-                ) : (
+                        <p className="no-category">
+                            No categories found
+                        </p>
 
-                    <p className="no-category">
-                        No categories found
-                    </p>
-
+                    )
                 )}
 
             </div>

@@ -61,7 +61,9 @@ const currentUnit =
 
     
 
-    const [quantity, setQuantity] = useState(50);
+    const [quantity, setQuantity] = useState(
+    previousProductData.quantity ?? 50
+);
 
     const decreaseQuantity = () => {
         setQuantity((prev) => Math.max(0, prev - 1));
@@ -74,20 +76,28 @@ const currentUnit =
 
     
 
-    const [minPrice, setMinPrice] = useState("");
-    const [maxPrice, setMaxPrice] = useState("");
-    const [negotiable, setNegotiable] = useState(false);
+    const [minPrice, setMinPrice] = useState(
+    previousProductData.pricing?.minPrice ?? ""
+);
+    const [maxPrice, setMaxPrice] = useState(
+    previousProductData.pricing?.maxPrice ?? ""
+);
 
+    const [negotiable, setNegotiable] = useState(
+    previousProductData.pricing?.negotiable ?? false
+);
 
     
 
-    const [freeDelivery, setFreeDelivery] = useState(false);
-
+    const [freeDelivery, setFreeDelivery] = useState(
+    previousProductData.delivery?.freeDelivery ?? false
+);
 
     
 
-    const [condition, setCondition] = useState("new");
-
+    const [condition, setCondition] = useState(
+    previousProductData.condition ?? "new"
+);
 
     
 
@@ -191,10 +201,9 @@ const currentUnit =
     };
 
 
-    
-
-    const [description, setDescription] =
-        useState("");
+    const [description, setDescription] = useState(
+    previousProductData.description || ""
+);
 
 
     
@@ -207,71 +216,74 @@ const currentUnit =
 
     const handleContinue = () => {
 
-        
-        if (quantity <= 0) {
-            alert(
-                "Please enter a quantity greater than 0."
-            );
-            return;
-        }
+    if (!Number.isFinite(Number(quantity)) || Number(quantity) <= 0) {
+        alert("Please enter a quantity greater than 0.");
+        return;
+    }
 
-        
-        if (!minPrice) {
-            alert("Please enter minimum price.");
-            return;
-        }
+    if (
+        minPrice === "" ||
+        !Number.isFinite(Number(minPrice)) ||
+        Number(minPrice) <= 0
+    ) {
+        alert("Please enter a valid minimum price.");
+        return;
+    }
 
-       
-        if (!maxPrice) {
-            alert("Please enter maximum price.");
-            return;
-        }
+    if (
+        maxPrice === "" ||
+        !Number.isFinite(Number(maxPrice)) ||
+        Number(maxPrice) <= 0
+    ) {
+        alert("Please enter a valid maximum price.");
+        return;
+    }
 
-        
-        if (Number(minPrice) > Number(maxPrice)) {
-            alert(
-                "Minimum price cannot be greater than maximum price."
-            );
-            return;
-        }
-const productDetails = {
-    ...previousProductData,
-
-    category: selectedCategory,
-
-    quantity,
-    quantityUnit: currentUnit.quantityUnit,
-
-    pricing: {
-        minPrice,
-        maxPrice,
-        priceUnit: currentUnit.priceUnit,
-        negotiable,
-    },
-
-    delivery: {
-        freeDelivery,
-    },
-
-    condition,
-    photos,
-    video: productVideo,
-    description: description.trim(),
-};
-
-        console.log(
-            "Final Product Details:",
-            productDetails
+    if (Number(minPrice) > Number(maxPrice)) {
+        alert(
+            "Minimum price cannot be greater than maximum price."
         );
+        return;
+    }
 
-        navigate(
-            "/product-preview",
-            {
-                state: productDetails,
-            }
-        );
+    const productDetails = {
+
+        ...previousProductData,
+
+        category: selectedCategory,
+
+        quantity: Number(quantity),
+
+        quantityUnit: currentUnit.quantityUnit,
+
+        pricing: {
+            minPrice: Number(minPrice),
+            maxPrice: Number(maxPrice),
+            priceUnit: currentUnit.priceUnit,
+            negotiable
+        },
+
+        delivery: {
+            freeDelivery
+        },
+
+        condition,
+
+        photos: photos.map(photo => photo.preview),
+
+        uploadedPhotos: photos.map(photo => photo.file),
+
+        video: productVideo,
+
+        description: description.trim()
     };
 
+    console.log("Product Details:", productDetails);
+
+    navigate("/product-preview", {
+        state: productDetails
+    });
+};
 
     return (
         <div className="refined-product-page">
@@ -616,9 +628,11 @@ const productDetails = {
                         <div className="product-photo-box">
 
                             <img
-                                src={wheatimage}
-                                alt="Wheat product"
-                            />
+                            src={previousProductData.selectedImage}
+                            alt={previousProductData.productName || "Product"}
+                             />
+
+                            
 
                         </div>
 
@@ -627,9 +641,11 @@ const productDetails = {
                         <div className="product-photo-box">
 
                             <img
-                                src={mountain}
-                                alt="Product"
+                             src={previousProductData.selectedImage}
+                             alt={previousProductData.productName || "Product"}
                             />
+
+                           
 
                         </div>
 

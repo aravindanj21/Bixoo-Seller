@@ -1,18 +1,10 @@
-* {
-    box-sizing: border-box;
-}
-
 .refined-product-page {
-    width: 390px;
+    
     min-height: 100vh;
-
-    margin: 0 auto;
-
-    background: #fafcef;
 
     font-family: "Poppins", sans-serif;
 
-    overflow-x: hidden;
+    
 }
 
 .refined-header {
@@ -55,66 +47,9 @@
 }
 
 
-.category-progress-section {
-    width: 350px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.category-progress-text {
-    width: 350px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    font-family: "Poppins", sans-serif;
-
-    font-size: 10px;
-    font-weight: 400;
-
-    line-height: 16px;
-
-    color: #65702d;
-}
-
 .category-progress-text span:last-child {
     color: #8b8b8b;
 }
-
-
-.category-progress-bars {
-    width: 350px;
-    height: 8px;
-
-    display: flex;
-
-    gap: 8px;
-}
-
-.category-progress-bar {
-    flex: 1;
-
-    height: 8px;
-
-    border-radius: 9999px;
-
-    background: #d3daef;
-}
-
-.category-progress-bar.active {
-    background: #4d6f00;
-}
-
-
-
-
-
-
-
 
 
 .refined-back-btn {
@@ -235,7 +170,7 @@
 
 
 .quantity-section {
-    width: 350px;
+    
     min-height: 178px;
 
     padding: 16px;
@@ -245,11 +180,6 @@
 
     gap: 8px;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -403,7 +333,7 @@
 
 
 .pricing-section {
-    width: 350px;
+   
     height: 164px;
 
     padding: 16px;
@@ -413,11 +343,6 @@
 
     gap: 16px;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -446,6 +371,12 @@
     border-radius: 12px;
 
     background: #f9fafb;
+}
+
+.pricing-container .price-input-box {
+    flex: 1;
+    min-width: 0;
+    width: auto;
 }
 
 
@@ -577,7 +508,6 @@
 
 
 .delivery-section {
-    width: 350px;
     height: 130px;
 
     padding: 16px;
@@ -587,11 +517,6 @@
 
     gap: 16px;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -689,7 +614,6 @@
 
 
 .condition-section {
-    width: 350px;
     height: 124px;
 
     padding: 16px;
@@ -699,11 +623,6 @@
 
     gap: 16px;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -761,7 +680,6 @@
 
 
 .photos-section {
-    width: 350px;
     height: 214px;
 
     padding: 16px;
@@ -770,13 +688,6 @@
     flex-direction: column;
 
     gap: 12px;
-
-    background: #ffffff;
-
-    border-radius: 24px;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
-
     overflow: hidden;
 }
 
@@ -1150,8 +1061,6 @@
 
 
 .video-section {
-    width: 350px;
-
     min-height: 214px;
 
     padding: 16px;
@@ -1161,11 +1070,6 @@
 
     gap: 12px;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -1314,7 +1218,6 @@
 
 
 .description-section {
-    width: 350px;
     height: 171px;
 
     padding: 16px 16px 23px;
@@ -1323,12 +1226,6 @@
     flex-direction: column;
 
     gap: 16px;
-
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
 
@@ -1394,7 +1291,6 @@
 }
 
 .refined-continue-button {
-    width: 350px;
     height: 61px;
 
     padding: 0;
@@ -1407,7 +1303,7 @@
     gap: 8px;
 
     border: none;
-    border-radius: 16px;
+
 
     background: #88a91c;
 

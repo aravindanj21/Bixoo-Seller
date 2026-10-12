@@ -20,8 +20,13 @@ import { MdOutlineVerified } from "react-icons/md";
 
 import wheatbag from "../../../assets/wheatbag.jpg";
 
+import { createProduct } from "../../Services/productService";
+
 
 function ProductPreview() {
+
+    const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -103,19 +108,19 @@ const priceUnit =
     currentUnit?.priceUnit ||
     "";
     
+const photoList = [];
 
-    const photoList = [];
+if (customProductImage) {
+    photoList.push(customProductImage);
+}
 
-    if (customProductImage) {
-        photoList.push(customProductImage);
+uploadedPhotos.forEach((photo) => {
+    if (typeof photo === "string") {
+        photoList.push(photo);
+    } else if (photo?.preview) {
+        photoList.push(photo.preview);
     }
-
-    uploadedPhotos.forEach((photo) => {
-        if (photo?.preview) {
-            photoList.push(photo.preview);
-        }
-    });
-
+});
 
     
     if (photoList.length === 0) {
@@ -138,22 +143,37 @@ const priceUnit =
 
     
 
-    const handleAddToStore = () => {
+    const handleAddToStore = async () => {
+
+    if (submitting) return;
+
+    if (!productName.trim()) {
+        setSubmitError("Product name is required.");
+        return;
+    }
+
+    try {
+        setSubmitting(true);
+        setSubmitError("");
 
         const finalProduct = {
+            ...productData,
+
             category,
             productName,
             description,
             quantity,
 
             pricing: {
+                ...productData.pricing,
                 minPrice,
                 maxPrice,
-                negotiable,
+                negotiable
             },
 
             delivery: {
-                freeDelivery,
+                ...productData.delivery,
+                freeDelivery
             },
 
             condition,
@@ -162,25 +182,29 @@ const priceUnit =
 
             video: productVideo,
 
-            status: "Live",
+            status: "Live"
         };
 
+        const createdProduct = await createProduct(finalProduct);
 
-        console.log(
-            "Product added to store:",
-            finalProduct
-        );
-
-
-        
-
+        console.log("Product created:", createdProduct);
 
         navigate("/seller/my-store", {
-            state: {
-                newProduct: finalProduct,
-            },
+            replace: true
         });
-    };
+
+    } catch (error) {
+
+        console.error("Product creation failed:", error);
+
+        setSubmitError(
+            error.message || "Unable to add product."
+        );
+
+    } finally {
+        setSubmitting(false);
+    }
+};
 
 
     return (
@@ -564,19 +588,22 @@ const priceUnit =
            
             <div className="preview-bottom-action">
 
+                {submitError && (
+                <p role="alert" className="preview-submit-error">
+               {submitError}
+               </p>
+                )}
+
                 <button
-                    type="button"
-                    className="add-store-button"
-                    onClick={handleAddToStore}
-                >
-
-                    <FiShoppingBag
-                        className="add-store-icon"
-                    />
-
-                    Add to My Store
-
-                </button>
+                type="button"
+                className="add-store-button"
+                onClick={handleAddToStore}
+                disabled={submitting}
+                 >
+                <FiShoppingBag className="add-store-icon" />
+ 
+                {submitting ? "Adding Product..." : "Add to My Store"}
+               </button>
 
             </div>
 

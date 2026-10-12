@@ -1,125 +1,158 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import "./AddCustomProduct.css";
 
 import overlay from "../../../assets/overlay.png";
-import rices from "../../../assets/rices.png";
-import coffees from "../../../assets/coffees.jpg";
-import corns from "../../../assets/corns.jpg";
 import photoupload from "../../../assets/photoupload.png";
 
-import background from "../../../assets/Background.png";
-import vehicles from "../../../assets/vehicles.png";
-import machinery from "../../../assets/machinery.png";
-import electronics from "../../../assets/electronics.png";
-import rawmaterials from "../../../assets/rawmaterials.png";
-import othercategories from "../../../assets/othercategories.png";
+import {
+    getCategories,
+    getSuggestedImages
+} from "../../Services/categoryService";
+
 
 function AddCustomProduct() {
+
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [productName, setProductName] = useState("");
-    const [description, setDescription] = useState("");
-    const [selectedImage, setSelectedImage] = useState(null);
+    const previousData = location.state || {};
 
-    const [selectedCategory, setSelectedCategory] =
-        useState("Agriculture");
+    const [productName, setProductName] = useState(
+        previousData.productName || ""
+    );
 
-    const [showCategories, setShowCategories] =
-        useState(false);
+    const [description, setDescription] = useState(
+        previousData.description || ""
+    );
 
-    
-    const categories = [
-        {
-            id: 1,
-            name: "Agriculture",
-            image: background,
-        },
-        {
-            id: 2,
-            name: "Vehicles",
-            image: vehicles,
-        },
-        {
-            id: 3,
-            name: "Machinery",
-            image: machinery,
-        },
-        {
-            id: 4,
-            name: "Electronics",
-            image: electronics,
-        },
-        {
-            id: 5,
-            name: "Raw Materials",
-            image: rawmaterials,
-        },
-        {
-            id: 6,
-            name: "Other Categories",
-            image: othercategories,
-        },
-    ];
+    const [selectedImage, setSelectedImage] = useState(
+        previousData.productImage || null
+    );
+
+    const [uploadedFile, setUploadedFile] = useState(null);
+
+    const [selectedCategory, setSelectedCategory] = useState({
+        id: previousData.categoryId || 1,
+        name: previousData.categoryName || "Agriculture"
+    });
+
+    const [categories, setCategories] = useState([]);
+    const [suggestedImages, setSuggestedImages] = useState([]);
+
+    const [showCategories, setShowCategories] = useState(false);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
 
     
+    useEffect(() => {
 
-    const categoryImages = {
-        Agriculture: [
-            rices,
-            coffees,
-            corns,
-        ],
+        let active = true;
 
-        Vehicles: [
-            vehicles,
-            vehicles,
-            vehicles,
-        ],
+        const fetchCategories = async () => {
 
-        Machinery: [
-            machinery,
-            machinery,
-            machinery,
-        ],
+            try {
 
-        Electronics: [
-            electronics,
-            electronics,
-            electronics,
-        ],
+                const data = await getCategories();
 
-        "Raw Materials": [
-            rawmaterials,
-            rawmaterials,
-            rawmaterials,
-        ],
+                if (active) {
+                    setCategories(
+                        Array.isArray(data)
+                            ? data
+                            : data.categories || []
+                    );
+                }
 
-        "Other Categories": [
-            othercategories,
-            othercategories,
-            othercategories,
-        ],
-    };
+            } catch (error) {
+
+                console.error(
+                    "Error fetching categories:",
+                    error
+                );
+
+                if (active) {
+                    setError("Unable to load categories.");
+                }
+            }
+        };
+
+        fetchCategories();
+
+        return () => {
+            active = false;
+        };
+
+    }, []);
+
+
+    
+    useEffect(() => {
+
+        let active = true;
+
+        const fetchImages = async () => {
+
+            try {
+
+                setLoading(true);
+
+                const data = await getSuggestedImages(
+                    selectedCategory.id
+                );
+
+                if (active) {
+                    setSuggestedImages(
+                        Array.isArray(data) ? data : []
+                    );
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Error fetching suggested images:",
+                    error
+                );
+
+                if (active) {
+                    setSuggestedImages([]);
+                }
+
+            } finally {
+
+                if (active) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchImages();
+
+        return () => {
+            active = false;
+        };
+
+    }, [selectedCategory.id]);
+
 
     
 
-    const suggestedImages =
-        categoryImages[selectedCategory] || [];
-
-    
     const handleSuggestedImage = (image) => {
+
         setSelectedImage(image);
+        setUploadedFile(null);
+
     };
 
-    
 
+    
     const handlePhotoUpload = (event) => {
+
         const file = event.target.files?.[0];
 
-        if (!file) {
-            return;
-        }
+        if (!file) return;
 
         if (!file.type.startsWith("image/")) {
             alert("Please select a valid image file.");
@@ -131,6 +164,7 @@ function AddCustomProduct() {
 
         reader.onload = () => {
             setSelectedImage(reader.result);
+            setUploadedFile(file);
         };
 
         reader.readAsDataURL(file);
@@ -138,57 +172,77 @@ function AddCustomProduct() {
         event.target.value = "";
     };
 
-    
 
+    
     const handleChangeCategory = () => {
+
         setShowCategories((previous) => !previous);
+
     };
+
 
     
-
     const handleCategorySelect = (category) => {
-        setSelectedCategory(category.name);
 
-        
+        setSelectedCategory({
+            id: category.id,
+            name: category.name
+        });
+
         setSelectedImage(null);
+        setUploadedFile(null);
 
-        
         setShowCategories(false);
+
     };
+
 
     
 
     const handleNext = () => {
 
-    if (!productName.trim()) {
-        alert("Please enter the product name.");
-        return;
-    }
+        if (!productName.trim()) {
+            alert("Please enter the product name.");
+            return;
+        }
 
-    if (!selectedImage) {
-        alert("Please select or upload a product photo.");
-        return;
-    }
+        if (!selectedImage) {
+            alert("Please select or upload a product photo.");
+            return;
+        }
 
-    const productData = {
-        category: selectedCategory,
-        productName: productName.trim(),
-        description: description.trim(),
-        selectedImage,
+        const productData = {
+
+            categoryId: selectedCategory.id,
+            category: selectedCategory.name,
+
+            productId: previousData.productId || null,
+
+            productName: productName.trim(),
+
+            description: description.trim(),
+
+            selectedImage,
+
+            uploadedFile,
+
+            isCustomProduct:
+                previousData.isCustomProduct || false
+        };
+
+        console.log("Sending Product Data:", productData);
+
+        navigate("/add-product-refined", {
+            state: productData
+        });
+
     };
 
-    console.log("Sending Category:", selectedCategory);
-    console.log("Sending Product Data:", productData);
-
-    navigate("/add-product-refined", {
-        state: productData,
-    });
-};
 
     return (
-        <div className="custom-product-page">
 
-           
+        <div className="store-page custom-product-page">
+
             <div className="custom-top-header">
 
                 <button
@@ -220,15 +274,18 @@ function AddCustomProduct() {
 
             </div>
 
-           
+
+            
 
             <div className="custom-header">
 
                 <div className="custom-header-icon">
+
                     <img
                         src={overlay}
                         alt="Custom product"
                     />
+
                 </div>
 
                 <div className="custom-header-content">
@@ -247,7 +304,9 @@ function AddCustomProduct() {
 
             </div>
 
-           
+
+            
+
             <div className="product-info-card">
 
                 <div className="category-box">
@@ -255,13 +314,15 @@ function AddCustomProduct() {
                     <div className="category-left">
 
                         <div>
+
                             <span className="category-label">
                                 Category
                             </span>
 
                             <strong>
-                                {selectedCategory}
+                                {selectedCategory.name}
                             </strong>
+
                         </div>
 
                     </div>
@@ -276,11 +337,16 @@ function AddCustomProduct() {
 
                 </div>
 
-               
+
+                
 
                 {showCategories && (
 
                     <div className="custom-category-list">
+
+                        {error && (
+                            <p role="alert">{error}</p>
+                        )}
 
                         {categories.map((category) => (
 
@@ -288,7 +354,7 @@ function AddCustomProduct() {
                                 type="button"
                                 key={category.id}
                                 className={`custom-category-option ${
-                                    selectedCategory === category.name
+                                    String(selectedCategory.id) === String(category.id)
                                         ? "selected"
                                         : ""
                                 }`}
@@ -314,6 +380,7 @@ function AddCustomProduct() {
 
                 )}
 
+
                 
 
                 <div className="selling-field">
@@ -336,7 +403,8 @@ function AddCustomProduct() {
 
             </div>
 
-            
+
+          
 
             <div className="suggestion-card">
 
@@ -345,35 +413,44 @@ function AddCustomProduct() {
                     this image.
                 </p>
 
-                <div className="suggestion-images">
+                {loading ? (
 
-                    {suggestedImages.map((image, index) => (
+                    <p>Loading suggested images...</p>
 
-                        <button
-                            type="button"
-                            key={`${selectedCategory}-${index}`}
-                            className={`suggestion-image ${
-                                selectedImage === image
-                                    ? "selected"
-                                    : ""
-                            }`}
-                            onClick={() =>
-                                handleSuggestedImage(image)
-                            }
-                        >
+                ) : (
 
-                            <img
-                                src={image}
-                                alt={`${selectedCategory} product ${index + 1}`}
-                            />
+                    <div className="suggestion-images">
 
-                        </button>
+                        {suggestedImages.map((image, index) => (
 
-                    ))}
+                            <button
+                                type="button"
+                                key={`${selectedCategory.id}-${index}`}
+                                className={`suggestion-image ${
+                                    selectedImage === image
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleSuggestedImage(image)
+                                }
+                            >
 
-                </div>
+                                <img
+                                    src={image}
+                                    alt={`${selectedCategory.name} product ${index + 1}`}
+                                />
+
+                            </button>
+
+                        ))}
+
+                    </div>
+
+                )}
 
             </div>
+
 
           
 
@@ -382,6 +459,7 @@ function AddCustomProduct() {
                 <label className="photo-title">
                     Product Photos
                 </label>
+
 
                 
 
@@ -398,6 +476,7 @@ function AddCustomProduct() {
                     ) : (
 
                         <>
+
                             <div className="camera-icon">
 
                                 <img
@@ -407,9 +486,8 @@ function AddCustomProduct() {
 
                             </div>
 
-                            <p>
-                                Add Main Photo
-                            </p>
+                            <p>Add Main Photo</p>
+
                         </>
 
                     )}
@@ -423,6 +501,7 @@ function AddCustomProduct() {
 
                 </label>
 
+
                 
 
                 <div className="photo-thumbnails">
@@ -431,7 +510,7 @@ function AddCustomProduct() {
 
                         <button
                             type="button"
-                            key={`${selectedCategory}-${index}`}
+                            key={`${selectedCategory.id}-${index}`}
                             className={`thumbnail ${
                                 selectedImage === image
                                     ? "selected"
@@ -444,14 +523,13 @@ function AddCustomProduct() {
 
                             <img
                                 src={image}
-                                alt={`${selectedCategory} ${index + 1}`}
+                                alt={`${selectedCategory.name} ${index + 1}`}
                             />
 
                         </button>
 
                     ))}
 
-                   
 
                     <label className="add-thumbnail">
 
@@ -470,7 +548,9 @@ function AddCustomProduct() {
 
             </div>
 
-            
+
+          
+
             <div className="description-card">
 
                 <label htmlFor="custom-product-description">
@@ -488,13 +568,13 @@ function AddCustomProduct() {
 
             </div>
 
-          
 
+            
             <div className="next-button-wrapper">
 
                 <button
                     type="button"
-                    className="next-details-button"
+                    className="store-primary-button next-details-button"
                     onClick={handleNext}
                 >
 
@@ -511,7 +591,9 @@ function AddCustomProduct() {
             </div>
 
         </div>
+
     );
+
 }
 
 export default AddCustomProduct;

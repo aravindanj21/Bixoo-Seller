@@ -6,7 +6,7 @@ import ChooseProduct from "./seller/components/ChooseProduct/ChooseProduct";
 import AddCustomProduct from "./seller/components/AddCustomProduct/AddCustomProduct";
 import AddProductRefinedPage from "./seller/pages/AddProductRefinedPage/AddProductRefined";
 import ProductPreviewPage from "./seller/pages/ProductPreviewPage/ProductPreviewPage";
-
+import AuctionsHomePage from "./seller/pages/AuctionsHomePage/AuctionsHomePage";
 function App() {
     return (
         <BrowserRouter>
@@ -47,6 +47,11 @@ function App() {
                 <Route
                 path="/product-preview"
                 element={<ProductPreviewPage />}
+                />
+
+                <Route
+                 path="/bidbox"
+                element={<AuctionsHomePage />}
                 />
 
             </Routes>

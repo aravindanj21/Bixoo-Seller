@@ -1,12 +1,4 @@
-* {
-    box-sizing: border-box;
-}
-
 .product-preview-page {
-    width: 100%;
-    max-width: 390px;
-    min-height: 100vh;
-    margin: 0 auto;
     padding-bottom: 0;
 
     font-family: "Poppins", Arial, sans-serif;
@@ -21,7 +13,6 @@
 }
 
 .preview-header {
-    width: 390px;
 
     padding: 24px 20px 16px 20px;
 
@@ -29,8 +20,6 @@
     flex-direction: column;
 
     gap: 20px;
-
-    box-sizing: border-box;
 
     background: #fafcef;
 }
@@ -69,76 +58,7 @@
 }
 
 
-
-
-.preview-header .category-progress-section {
-    width: 350px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-
-
-
-.preview-header .category-progress-text {
-    width: 350px;
-    height: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    font-family: "Poppins", Arial, sans-serif;
-
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 16px;
-
-    color: #65702d;
-}
-
-
-.preview-header .category-progress-text span:last-child {
-    color: #8b8b8b;
-}
-
-
-
-
-.preview-header .category-progress-bars {
-    width: 350px;
-    height: 8px;
-
-    display: flex;
-
-    gap: 8px;
-}
-
-
-.preview-header .category-progress-bar {
-    flex: 1;
-
-    height: 8px;
-
-    border-radius: 9999px;
-
-    background: #d3daef;
-}
-
-
-.preview-header .category-progress-bar.active {
-    background: #4d6f00;
-}
-
-
-
 .preview-main {
-    width: 390px;
-    max-width: 100%;
-
     min-height: auto;
 
     padding-left: 20px;
@@ -150,8 +70,6 @@
 
 
 .preview-introduction {
-    width: 350px;
-    max-width: 100%;
 
     margin-top: 16px;
 }
@@ -186,9 +104,6 @@
 
 
 .preview-product-stack {
-    width: 350px;
-    max-width: 100%;
-
     min-height: auto;
 
     padding-top: 24px;
@@ -260,8 +175,6 @@
 
 
 .preview-image-wrapper {
-    width: 350px;
-    max-width: 100%;
     height: 288px;
 
     position: relative;
@@ -340,8 +253,6 @@
 
 
 .preview-thumbnails {
-    width: 350px;
-    max-width: 100%;
     height: 64px;
 
     display: flex;
@@ -431,18 +342,9 @@
 
 
 .preview-card {
-    width: 350px;
-    max-width: 100%;
-
-    background: #ffffff;
-
     border: 1px solid #e8ece7;
-    border-radius: 24px;
 
-    box-shadow: 0 4px 14px #0000000a;
 }
-
-
 
 
 .price-card {
@@ -608,9 +510,6 @@
 
 
 .preview-bottom-action {
-    width: 390px;
-    max-width: 100%;
-
     padding: 8px 20px 12px;
 
     background: #fafcef;
@@ -618,8 +517,6 @@
 
 
 .add-store-button {
-    width: 350px;
-    max-width: 100%;
     height: 52px;
 
     border: none;
@@ -667,25 +564,71 @@
     transform: scale(0.98);
 }
 
+.product-preview-page {
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto;
+}
 
+/* Header */
+.product-preview-page .preview-header {
+    width: 100%;
+    max-width: 390px;
+    padding: 24px 20px 16px;
+    box-sizing: border-box;
+}
+
+
+.product-preview-page .preview-header .category-progress-section,
+.product-preview-page .preview-header .category-progress-text,
+.product-preview-page .preview-header .category-progress-bars {
+    width: 100%;
+    max-width: 350px;
+}
+
+
+.product-preview-page .preview-main {
+    width: 100%;
+    max-width: 390px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+
+.product-preview-page .preview-introduction,
+.product-preview-page .preview-product-stack,
+.product-preview-page .preview-image-wrapper,
+.product-preview-page .preview-thumbnails,
+.product-preview-page .preview-card {
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+}
+
+
+.product-preview-page .preview-bottom-action {
+    width: 100%;
+    max-width: 390px;
+    padding: 8px 20px 12px;
+    box-sizing: border-box;
+}
+
+
+.product-preview-page .add-store-button {
+    width: 100%;
+    max-width: 350px;
+}
+
+
+.product-preview-page .preview-title-section,
+.product-preview-page .preview-main-image {
+    max-width: 100%;
+}
 
 
 @media (max-width: 390px) {
-
     .product-preview-page {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .preview-header,
-    .preview-main,
-    .preview-bottom-action {
-        width: 100%;
-    }
-
-    .preview-header .category-progress-section,
-    .preview-header .category-progress-text,
-    .preview-header .category-progress-bars {
         width: 100%;
     }
 }
+

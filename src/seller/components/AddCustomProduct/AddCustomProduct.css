@@ -1,41 +1,19 @@
-* {
-    box-sizing: border-box;
-}
-
-
-
-
 .custom-product-page {
-    width: 390px;
-    min-height: auto;
-    max-width: 672px;
-
-    margin: 0 auto;
-
-    padding: 16px 20px 32px;
-
     display: flex;
     flex-direction: column;
-
     gap: 16px;
-
-    background: #fbfff0;
-
-    font-family: "Poppins", Arial, Helvetica, sans-serif;
-
-    overflow-x: hidden;
+    background: var(--store-custom-bg);
 }
 
 
 
 .custom-top-header {
-    width: 350px;
-
+    width: 100%;
     display: flex;
     flex-direction: column;
-
     gap: 12px;
 }
+
 
 
 
@@ -95,7 +73,7 @@
 
     line-height: 16px;
 
-    color: #65702d;
+    
 }
 
 
@@ -118,32 +96,17 @@
 
 .category-progress-bar {
     flex: 1;
-
     height: 8px;
-
     border-radius: 9999px;
-
-    background: #d3daef;
 }
-
-
-.category-progress-bar.active {
-    background: #4d6f00;
-}
-
-
-
 
 .custom-header {
-    width: 350px;
+    width: 100%;
     height: 72px;
-
     display: flex;
     align-items: center;
-
     gap: 16px;
 }
-
 
 .custom-header-icon {
     width: 64px;
@@ -521,10 +484,6 @@
 
     gap: 12px;
 
-    background: #ffffff;
-
-    border-radius: 24px;
-
     box-shadow: 0px 4px 14px 0px #0000000f;
 
     box-sizing: border-box;
@@ -787,10 +746,6 @@
 
     border: none;
 
-    border-radius: 24px;
-
-    background: #ffffff;
-
     box-shadow: 0px 4px 14px 0px #0000000f;
 }
 
@@ -915,6 +870,53 @@
     font-weight: 400;
 
     line-height: 24px;
+}
+
+.custom-product-page {
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto;
+    padding: 16px 20px 32px;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+
+.custom-product-page .custom-top-header,
+.custom-product-page .category-progress-section,
+.custom-product-page .category-progress-text,
+.custom-product-page .category-progress-bars,
+.custom-product-page .custom-header,
+.custom-product-page .product-info-card,
+.custom-product-page .suggestion-card,
+.custom-product-page .photo-card,
+.custom-product-page .description-card,
+.custom-product-page .next-button-wrapper {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+.custom-product-page .category-box,
+.custom-product-page .custom-category-list,
+.custom-product-page .selling-field,
+.custom-product-page .selling-field input,
+.custom-product-page .photo-title,
+.custom-product-page .main-photo-upload,
+.custom-product-page .photo-thumbnails,
+.custom-product-page .photo-helper-text,
+.custom-product-page .description-card label,
+.custom-product-page .description-card textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+.custom-product-page .next-details-button {
+    width: 100%;
+    max-width: 100%;
 }
 
 
